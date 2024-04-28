@@ -3,5 +3,11 @@
         "dashboard": "仪表板",
         "setting": "环境",
         "history": "历史"
+    },
+    "language": {
+        "en": "English",
+        "de": "Deutsch",
+        "zh": "中文",
+        "fr": "Français"
     }
 }

@@ -3,5 +3,11 @@
         "dashboard": "Dashboard",
         "setting": "Setting",
         "history": "History"
+    },
+    "language": {
+        "en": "English",
+        "de": "Deutsch",
+        "zh": "中文",
+        "fr": "Français"
     }
 }
