@@ -3,5 +3,11 @@
         "dashboard": "tableau de bord",
         "setting": "Paramètre",
         "history": "Histoire"
+    },
+    "language": {
+        "en": "English",
+        "de": "Deutsch",
+        "zh": "中文",
+        "fr": "Français"
     }
 }

@@ -9,5 +9,8 @@
   "author": {
     "name": "mrkouhadi",
     "email": "teacherbryan@outlook.com"
+  },
+  "mac": {
+    "icon": "logo.ico"
   }
 }

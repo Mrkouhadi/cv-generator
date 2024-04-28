@@ -34,7 +34,7 @@ import { store } from "./state/store";
 import Dashboard from "./pages/Dashboard";
 import History from "./pages/History";
 // render everything
-const container = document.getElementById("main");
+const container = document.getElementById("root");
 ReactDOM.createRoot(container as HTMLElement).render(
   <React.StrictMode>
     <Provider store={store}>
