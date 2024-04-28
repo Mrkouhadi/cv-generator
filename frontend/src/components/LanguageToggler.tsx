@@ -5,7 +5,6 @@ import { useTranslation } from "react-i18next";
 const LanguageToggler: React.FC = () => {
   const { t, i18n } = useTranslation("global");
   const [activeLanguage, setActiveLanguage] = useState<string | null>(null);
-  const [formattedLang, setFormattedLang] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
 
   const changeLanguageHandler = (lng: string) => {
@@ -21,29 +20,6 @@ const LanguageToggler: React.FC = () => {
     setActiveLanguage(savedLanguage);
   }, []);
 
-  useEffect(() => {
-    formatLanguage(activeLanguage);
-  }, [activeLanguage]);
-
-  const formatLanguage = (lng: string | null) => {
-    switch (lng) {
-      case "en":
-        setFormattedLang("English");
-        break;
-      case "de":
-        setFormattedLang("Deutsch");
-        break;
-      case "zh":
-        setFormattedLang("中国人");
-        break;
-      case "fr":
-        setFormattedLang("Français");
-        break;
-      default:
-        setFormattedLang("English");
-        break;
-    }
-  };
   return (
     <div className="relative w-full">
       <div
@@ -51,12 +27,12 @@ const LanguageToggler: React.FC = () => {
         className="flex justify-center items-center gap-3"
       >
         <button className="text-font-light-1 dark:text-font-dark-1 cursor-pointer">
-          {formattedLang}{" "}
+          {t("language." + activeLanguage)}{" "}
         </button>
         <GlobeEuropeAfricaIcon className="size-6 text-font-light-1 dark:text-font-dark-1 cursor-pointer" />
       </div>
       <div
-        className={`bg-primary flex flex-col gap-2 absolute p-4 -bottom-72 left-36 duration-500 transition-transform ${
+        className={`min-w-24 bg-primary flex flex-col gap-2 absolute p-4 -bottom-72 left-36 duration-500 transition-transform ${
           open ? "bottom-0 translate-y-0" : "translate-y-full"
         }`}
       >
@@ -64,25 +40,25 @@ const LanguageToggler: React.FC = () => {
           onClick={() => changeLanguageHandler("en")}
           className="text-font-dark-1  hover:text-yellow-400"
         >
-          English
+          {t("language.en")}
         </button>
         <button
           onClick={() => changeLanguageHandler("de")}
           className="text-font-dark-1  hover:text-yellow-400"
         >
-          German
+          {t("language.de")}
         </button>
         <button
           onClick={() => changeLanguageHandler("zh")}
           className="text-font-dark-1  hover:text-yellow-400"
         >
-          Chinese
+          {t("language.zh")}
         </button>
         <button
           onClick={() => changeLanguageHandler("fr")}
           className="text-font-dark-1  hover:text-yellow-400"
         >
-          French
+          {t("language.fr")}
         </button>
       </div>
     </div>
