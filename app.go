@@ -6,6 +6,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+
+	"github.com/wailsapp/wails/v2/pkg/runtime"
 )
 
 // App struct
@@ -29,7 +31,8 @@ func (a *App) Greet(name string) string {
 	return fmt.Sprintf("Hello %s, It's show time!", name)
 }
 
-// ///// save pdf file in "./data/files"
+// //PDF
+// /////Receive the file from the clientside then save it according to the user's preference.
 type RequestData struct {
 	PdfData string `json:"pdfData"`
 }
@@ -41,17 +44,41 @@ func (a *App) SendPdfFile(file, name string) {
 		fmt.Println("Error unmarshalling JSON:", err)
 		return
 	}
-	// Decode base64 PDF data
-	pdfData, err := base64.StdEncoding.DecodeString(requestData.PdfData)
+	_ = a.SaveFile(name, "cv-builder-"+name+".pdf", "", "", requestData.PdfData)
+}
+
+func (a *App) SaveFile(title string, defaultFilename string, _ string, _ string, base64Content string) string {
+
+	file, err := runtime.SaveFileDialog(a.ctx, runtime.SaveDialogOptions{
+		Title:           title,
+		DefaultFilename: defaultFilename,
+		Filters: []runtime.FileFilter{
+			{
+				DisplayName: "Pdf Files (*.pdf)",
+				Pattern:     "*.pdf",
+			},
+		},
+		ShowHiddenFiles:            true,
+		CanCreateDirectories:       true,
+		TreatPackagesAsDirectories: true,
+	})
 	if err != nil {
-		fmt.Println("Error decoding PDF data:", err)
-		return
+		fmt.Println("User Cancelled the File Dialog.", err)
+		return ""
 	}
-	// Save the PDF file to the server
-	err = os.WriteFile("./data/files/"+name+".pdf", pdfData, 0644)
+
+	// Decode the base64 content
+	decodedContent, err := base64.StdEncoding.DecodeString(base64Content)
 	if err != nil {
-		fmt.Println("Error writing PDF file:", err)
-		return
+		fmt.Println("Error decoding base64 content:", err)
+		return ""
 	}
-	fmt.Println("PDF file saved successfully")
+
+	// Write the decoded content to the selected file
+	err = os.WriteFile(file, decodedContent, 0644)
+	if err != nil {
+		fmt.Println("Error writing file:", err)
+		return ""
+	}
+	return file // returns complete path of the saved file
 }
