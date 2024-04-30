@@ -4,7 +4,10 @@ go 1.21
 
 toolchain go1.22.2
 
-require github.com/wailsapp/wails/v2 v2.8.1
+require (
+	github.com/wailsapp/wails/v2 v2.8.1
+	modernc.org/sqlite v1.29.8
+)
 
 require (
 	github.com/bep/debounce v1.2.1 // indirect
@@ -42,7 +45,6 @@ require (
 	modernc.org/libc v1.49.3 // indirect
 	modernc.org/mathutil v1.6.0 // indirect
 	modernc.org/memory v1.8.0 // indirect
-	modernc.org/sqlite v1.29.8 // indirect
 	modernc.org/strutil v1.2.0 // indirect
 	modernc.org/token v1.1.0 // indirect
 )
