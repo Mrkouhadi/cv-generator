@@ -11,6 +11,7 @@ import (
 
 //go:embed all:frontend/dist
 var assets embed.FS
+var icon []byte
 
 func main() {
 	// Create an instance of the app structure
@@ -44,14 +45,15 @@ func main() {
 			},
 			Appearance:           mac.NSAppearanceNameDarkAqua,
 			WebviewIsTransparent: true,
-			WindowIsTranslucent:  false,
+			WindowIsTranslucent:  true,
 			About: &mac.AboutInfo{
 				Title:   "CV Builder",
 				Message: "Copyright © 2024 Mr.Kouhadi",
-				// Icon:    icon,
+				Icon:    icon,
 			},
 		},
 	})
+
 	if err != nil {
 		println("Error:", err.Error())
 	}
