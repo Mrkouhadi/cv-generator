@@ -16,7 +16,6 @@ export type Education = {
     University:string
     Country:string
     City:string
-    Description:string
     StartDate:Date
     EndDate:Date
 }
