@@ -1,10 +1,221 @@
-import React from "react";
-import { User } from "../../utils/types";
+import React, { useState } from "react";
 
-const PersonDetails = ({ user }: User) => {
-  return <form className="p-4 ">
+const PersonDetails = () => {
+  const [imageSrc, setImageSrc] = useState<any>();
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [birthdate, setBirthdate] = useState("");
+  const [telephone, setTelephone] = useState("");
+  const [address, setAddress] = useState("");
+  const [jobTitle, setJobTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [errors, setErrors] = useState({
+    fullName: "",
+    email: "",
+    birthdate: "",
+    telephone: "",
+    address: "",
+    jobTitle: "",
+    description: "",
+    image: "",
+  });
 
-  </form>;
+  const handleImageChange = (event: any) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImageSrc(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+  const handleSubmit = (event: any) => {
+    event.preventDefault();
+    // Perform validation
+    const newErrors = {
+      fullName: fullName ? "" : "Full Name is required",
+      email: email ? "" : "Email is required",
+      birthdate: birthdate ? "" : "Birthdate is required",
+      telephone: telephone ? "" : "Telephone is required",
+      address: address ? "" : "Address is required",
+      jobTitle: jobTitle ? "" : "Job Title is required",
+      description: description ? "" : "Description is required",
+      image: imageSrc ? "" : "Image is required",
+    };
+    setErrors(newErrors);
+    // Check if there are no validation errors
+    const isValid = Object.values(newErrors).every((error) => error === "");
+    if (isValid) {
+      console.log("Form submitted successfully"); // FIXME: a modal to show the success message
+    } else {
+      console.log("Form contains errors. Please fix them before submitting."); // FIXME: a modal to show the error
+    }
+  };
+
+  return (
+    <form
+      onSubmit={handleSubmit}
+      className="p-4 w-full flex flex-col items-center gap-6 bg-bg-light-2 dark:bg-bg-dark-2 dark:text-font-dark-1 text-font-light-1 rounded"
+    >
+      <div className="flex flex-col items-start gap-2 w-4/5 relative ">
+        <label className="" htmlFor="name">
+          Full Name
+        </label>
+        <input
+          value={fullName}
+          onChange={(e) => setFullName(e.target.value)}
+          type="text"
+          id="name"
+          placeholder=""
+          className="p-2 rounded w-full bg-bg-light-1 dark:bg-bg-dark-1"
+        />
+        {errors.fullName && (
+          <p className="text-red-500 text-sm absolute -bottom-6">
+            {errors.fullName}
+          </p>
+        )}
+      </div>
+      <div className="flex flex-col items-start gap-2 w-4/5 relative ">
+        <label className="" htmlFor="email">
+          Email
+        </label>
+        <input
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          type="email"
+          name="email"
+          id="email"
+          placeholder=""
+          className="p-2 rounded w-full bg-bg-light-1 dark:bg-bg-dark-1"
+        />
+        {errors.email && (
+          <p className="text-red-500 text-sm absolute -bottom-6">
+            {errors.email}
+          </p>
+        )}
+      </div>{" "}
+      <div className="flex flex-col items-start gap-2 w-4/5 relative">
+        <label className="" htmlFor="birthdate">
+          Birthdate
+        </label>
+        <input
+          value={birthdate}
+          onChange={(e) => setBirthdate(e.target.value)}
+          type="date"
+          name="birthdate"
+          id="birthdate"
+          placeholder=""
+          className="p-2 rounded w-full bg-bg-light-1 dark:bg-bg-dark-1"
+        />
+        {errors.birthdate && (
+          <p className="text-red-500 text-sm absolute -bottom-6">
+            {errors.birthdate}
+          </p>
+        )}
+      </div>{" "}
+      <div className="flex flex-col items-start gap-2 w-4/5 relative">
+        <label className="" htmlFor="tel">
+          Telephone
+        </label>
+        <input
+          value={telephone}
+          onChange={(e) => setTelephone(e.target.value)}
+          type="phone"
+          name="tel"
+          id="tel"
+          placeholder=""
+          className="p-2 rounded w-full bg-bg-light-1 dark:bg-bg-dark-1"
+        />
+        {errors.telephone && (
+          <p className="text-red-500 text-sm absolute -bottom-6">
+            {errors.telephone}
+          </p>
+        )}
+      </div>
+      <div className="flex flex-col items-start gap-2 w-4/5 relative">
+        <label className="" htmlFor="address">
+          Address
+        </label>
+        <input
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+          type="text"
+          name="address"
+          id="address"
+          placeholder=""
+          className="p-2 rounded w-full bg-bg-light-1 dark:bg-bg-dark-1"
+        />
+        {errors.address && (
+          <p className="text-red-500 text-sm absolute -bottom-6">
+            {errors.address}
+          </p>
+        )}
+      </div>
+      <div className="flex flex-col items-start gap-2 w-4/5 relative">
+        <label className="" htmlFor="jobtitle">
+          Job Title
+        </label>
+        <input
+          value={jobTitle}
+          onChange={(e) => setJobTitle(e.target.value)}
+          type="text"
+          name="jobtitle"
+          id="jobtitle"
+          placeholder=""
+          className="p-2 rounded w-full bg-bg-light-1 dark:bg-bg-dark-1"
+        />
+        {errors.jobTitle && (
+          <p className="text-red-500 text-sm absolute -bottom-6">
+            {errors.jobTitle}
+          </p>
+        )}
+      </div>
+      <div className="flex flex-col items-start gap-2 w-4/5 relative">
+        <label className="" htmlFor="desc">
+          Description
+        </label>
+        <textarea
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder=""
+          name="desc"
+          id="desc"
+          className="resize-none p-2 rounded w-full bg-bg-light-1 dark:bg-bg-dark-1"
+          rows={6}
+        />
+        {errors.description && (
+          <p className="text-red-500 text-sm absolute -bottom-6">
+            {errors.description}
+          </p>
+        )}
+      </div>
+      <div className="relative flex justify-between w-4/5">
+        <input
+          type="file"
+          onChange={handleImageChange}
+          className="absolute inset-0 opacity-0 cursor-pointer w-[130px]"
+        />
+        {imageSrc ? ( // 170px x 130px
+          <div className="flex ">
+            <img
+              src={imageSrc}
+              alt="Uploaded"
+              style={{ maxWidth: "100%" }}
+              className="w-[130px] h-[170px] rounded-lg"
+            />
+          </div>
+        ) : (
+          <div className="dark:bg-gray-600 bg-gray-300 w-[130px] h-[170px] rounded-lg flex justify-center items-center">
+            <p className=""> upload image </p>
+          </div>
+        )}
+      </div>
+      <button type="submit" className="p-2 bg-primary text-white rounded w-4/5">
+        Submit
+      </button>
+    </form>
+  );
 };
 
 export default PersonDetails;
