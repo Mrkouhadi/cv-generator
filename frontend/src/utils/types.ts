@@ -38,11 +38,11 @@ export type Skill={
     readonly UserID:number
     Type:string
     Title:string
-    Scale:number // from 1 to 5 
+    Scale:string
 }
 export type Language={
     readonly ID:number
     readonly UserID:number
     Language:string
-    Proficiency:number // from 1 to 5 
+    Proficiency:string
 }

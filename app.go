@@ -2,9 +2,11 @@ package main
 
 import (
 	"context"
+	"database/sql"
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"log"
 	"os"
 
 	"github.com/wailsapp/wails/v2/pkg/runtime"
@@ -13,6 +15,7 @@ import (
 // App struct
 type App struct {
 	ctx context.Context
+	Db  *sql.DB
 }
 
 // NewApp creates a new App application struct
@@ -24,6 +27,13 @@ func NewApp() *App {
 // so we can call the runtime methods
 func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
+	db, err := InitializeSqlite()
+	if err != nil {
+		// FIXME: handle errors properly
+		log.Println("cannot set up sqlite database !")
+	}
+	a.Db = db
+	log.Println("successfully set up the db")
 }
 
 // Greet returns a greeting for the given name
