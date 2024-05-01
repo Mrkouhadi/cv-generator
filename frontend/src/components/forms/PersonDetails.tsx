@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { AddUser } from "../../../wailsjs/go/main/App";
 const PersonDetails = () => {
   const [imageSrc, setImageSrc] = useState<any>();
   const [fullName, setFullName] = useState("");
@@ -50,6 +50,19 @@ const PersonDetails = () => {
     // Check if there are no validation errors
     const isValid = Object.values(newErrors).every((error) => error === "");
     if (isValid) {
+      AddUser({
+        fullName,
+        email,
+        birthdate,
+        telephone,
+        address,
+        nationality,
+        jobTitle,
+        description,
+        imageSrc,
+      }).then((d) => {
+        console.log(d);
+      });
       console.log("Form submitted successfully"); // FIXME: a modal to show the success message
     } else {
       console.log("Form contains errors. Please fix them before submitting."); // FIXME: a modal to show the error

@@ -16,6 +16,7 @@ var icon []byte
 func main() {
 	// Create an instance of the app structure
 	app := NewApp()
+
 	// Create application with options
 	err := wails.Run(&options.App{
 		Title:            "cvbuilder",
@@ -40,8 +41,6 @@ func main() {
 				FullSizeContent:            false,
 				UseToolbar:                 true,
 				HideToolbarSeparator:       true,
-				// OnFileOpen:                 app.onFileOpen,
-				// OnUrlOpen:                  app.onUrlOpen,
 			},
 			Appearance:           mac.NSAppearanceNameDarkAqua,
 			WebviewIsTransparent: true,

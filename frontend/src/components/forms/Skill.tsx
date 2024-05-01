@@ -28,7 +28,7 @@ const Skill = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="relative p-4 px-24 w-full flex items-center justify-center gap-6 bg-bg-light-2 dark:bg-bg-dark-2 dark:text-font-dark-1 text-font-light-1 rounded"
+      className="relative p-4 px-24 w-full flex items-center justify-center gap-4 bg-bg-light-2 dark:bg-bg-dark-2 dark:text-font-dark-1 text-font-light-1 rounded"
     >
       <div className="flex items-center gap-2 w-full relative  py-2">
         <label className="" htmlFor="title">
