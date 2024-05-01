@@ -6,12 +6,14 @@ export type User = {
     Birthdate?:Date
     Telephone:string
     Address:string
+    Nationality:string
     JobTitle:string
     Description:string
 }
 export type Education = {
     readonly ID:number
     readonly UserID:number
+    Degree:string
     Major:string
     University:string
     Country:string
@@ -37,4 +39,10 @@ export type Skill={
     Type:string
     Title:string
     Scale:number // from 1 to 5 
+}
+export type Language={
+    readonly ID:number
+    readonly UserID:number
+    Language:string
+    Proficiency:number // from 1 to 5 
 }

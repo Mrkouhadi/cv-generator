@@ -29,12 +29,16 @@ const Language = () => {
       console.log("Form contains errors. Please fix them before submitting."); // FIXME: a modal to show the error
     }
   };
+
   return (
     <form
       onSubmit={handleSubmit}
-      className="p-4 w-full flex items-center gap-6 bg-bg-light-2 dark:bg-bg-dark-2 dark:text-font-dark-1 text-font-light-1 rounded"
+      className="p-4 gap-4 px-24 flex justify-center bg-bg-light-2 dark:bg-bg-dark-2 dark:text-font-dark-1 text-font-light-1 rounded"
     >
-      <div className="flex flex-col items-start gap-2 w-4/5 relative ">
+      <div className=" flex items-center gap-2 relative w-full">
+        <label className="" htmlFor="language">
+          Language:
+        </label>
         <input
           type="text"
           name="language"
@@ -50,7 +54,7 @@ const Language = () => {
           </p>
         )}
       </div>
-      <div className="flex flex-col items-start gap-2 w-4/5 relative ">
+      <div className=" flex flex-col items-start gap-2 relative w-full">
         <select
           id="proficiency"
           name="proficiency"
@@ -70,7 +74,7 @@ const Language = () => {
           </p>
         )}
       </div>
-      <div className="w-44 h-16 flex items-center justify-center">
+      <div className="flex items-center justify-center">
         <button
           type="submit"
           className="bg-primary text-white rounded p-2 px-4"

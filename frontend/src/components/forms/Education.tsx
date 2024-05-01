@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 const Education = () => {
+  const [degree, setDegree] = useState("");
   const [major, setMajor] = useState("");
   const [university, setUniversity] = useState("");
   const [startDate, setStartDate] = useState("");
@@ -8,6 +9,7 @@ const Education = () => {
   const [country, setCountry] = useState("");
   const [city, setCity] = useState("");
   const [errors, setErrors] = useState({
+    degree: "",
     major: "",
     university: "",
     startDate: "",
@@ -19,6 +21,7 @@ const Education = () => {
     event.preventDefault();
     // Perform validation
     const newErrors = {
+      degree: degree ? "" : "degree is required",
       major: major ? "" : "Major is required",
       university: university ? "" : "University is required",
       startDate: startDate ? "" : "start date is required",
@@ -40,24 +43,45 @@ const Education = () => {
       onSubmit={handleSubmit}
       className="p-4 w-full flex flex-col items-center gap-6 bg-bg-light-2 dark:bg-bg-dark-2 dark:text-font-dark-1 text-font-light-1 rounded"
     >
-      <div className="flex flex-col items-start gap-2 w-4/5 relative ">
-        <label className="" htmlFor="major">
-          Major
-        </label>
-        <input
-          value={major}
-          onChange={(e) => setMajor(e.target.value)}
-          type="text"
-          name="major"
-          id="major"
-          placeholder=""
-          className="p-2 rounded w-full bg-bg-light-1 dark:bg-bg-dark-1"
-        />
-        {errors.major && (
-          <p className="text-red-500 text-sm absolute -bottom-6">
-            {errors.major}
-          </p>
-        )}
+      <div className="flex items-center justify-between w-4/5 gap-12">
+        <div className="flex flex-col items-start gap-2 w-4/5 relative ">
+          <label className="" htmlFor="degree">
+            Degree
+          </label>
+          <input
+            value={degree}
+            onChange={(e) => setDegree(e.target.value)}
+            type="text"
+            name="degree"
+            id="degree"
+            placeholder=""
+            className="p-2 rounded w-full bg-bg-light-1 dark:bg-bg-dark-1"
+          />
+          {errors.degree && (
+            <p className="text-red-500 text-sm absolute -bottom-6">
+              {errors.degree}
+            </p>
+          )}
+        </div>
+        <div className="flex flex-col items-start gap-2 w-4/5 relative ">
+          <label className="" htmlFor="major">
+            Major
+          </label>
+          <input
+            value={major}
+            onChange={(e) => setMajor(e.target.value)}
+            type="text"
+            name="major"
+            id="major"
+            placeholder=""
+            className="p-2 rounded w-full bg-bg-light-1 dark:bg-bg-dark-1"
+          />
+          {errors.major && (
+            <p className="text-red-500 text-sm absolute -bottom-6">
+              {errors.major}
+            </p>
+          )}
+        </div>
       </div>
       <div className="flex flex-col items-start gap-2 w-4/5 relative ">
         <label className="" htmlFor="university">

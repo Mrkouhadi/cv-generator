@@ -1,23 +1,20 @@
 import React, { useState } from "react";
 
 const Skill = () => {
-  const [type, setType] = useState("");
   const [title, setTitle] = useState("");
-  const [scale, setScale] = useState("");
+  const [proficiency, setProficiency] = useState("beginner");
 
   const [errors, setErrors] = useState({
-    type: "",
     title: "",
-    scale: "",
+    proficiency: "",
   });
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
     // Perform validation
     const newErrors = {
-      type: type ? "" : "type is required",
       title: title ? "" : "title is required",
-      scale: scale ? "" : "Scale is required",
+      proficiency: proficiency ? "" : "Scale is required",
     };
     setErrors(newErrors);
     // Check if there are no validation errors
@@ -31,30 +28,11 @@ const Skill = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="relative p-4 w-full flex items-center gap-6 bg-bg-light-2 dark:bg-bg-dark-2 dark:text-font-dark-1 text-font-light-1 rounded"
+      className="relative p-4 px-24 w-full flex items-center justify-center gap-6 bg-bg-light-2 dark:bg-bg-dark-2 dark:text-font-dark-1 text-font-light-1 rounded"
     >
-      <div className="flex items-center gap-2 w-4/5 relative  py-2">
-        <label className="" htmlFor="type">
-          Type:
-        </label>
-        <input
-          type="text"
-          name="type"
-          value={type}
-          onChange={(e) => setType(e.target.value)}
-          id="type"
-          placeholder=""
-          className="p-2 rounded w-full bg-bg-light-1 dark:bg-bg-dark-1"
-        />
-        {errors.type && (
-          <p className="text-red-500 text-sm absolute -bottom-3 left-12">
-            {errors.type}
-          </p>
-        )}
-      </div>
-      <div className="flex items-center gap-2 w-4/5 relative  py-2">
+      <div className="flex items-center gap-2 w-full relative  py-2">
         <label className="" htmlFor="title">
-          Title:
+          Skill:
         </label>
         <input
           type="text"
@@ -71,24 +49,23 @@ const Skill = () => {
           </p>
         )}
       </div>
-      <div className="flex items-center gap-2 w-4/5 relative py-2">
-        <label className="" htmlFor="scale">
-          Scale:
-        </label>
-        <input
-          value={scale}
-          onChange={(e) => setScale(e.target.value)}
-          type="number"
-          name="scale"
-          id="scale"
-          placeholder="1"
-          min="1"
-          max="5"
-          className="p-2 rounded w-full bg-bg-light-1 dark:bg-bg-dark-1"
-        />
-        {errors.scale && (
-          <p className="text-red-500 text-sm absolute -bottom-3 left-14">
-            {errors.scale}
+      <div className="flex flex-col items-start gap-2 relative w-full">
+        <select
+          id="proficiency"
+          name="proficiency"
+          value={proficiency}
+          onChange={(e) => setProficiency(e.target.value)}
+          className="p-2 h-10 rounded w-full bg-bg-light-1 dark:bg-bg-dark-1"
+        >
+          <option value="">Select proficiency level</option>
+          <option value="beginner">Beginner</option>
+          <option value="elementary">Elementary</option>
+          <option value="proficient">Proficient</option>
+          <option value="native">Advanced</option>
+        </select>
+        {errors.proficiency && (
+          <p className="text-red-500 text-sm absolute -bottom-6">
+            {errors.proficiency}
           </p>
         )}
       </div>

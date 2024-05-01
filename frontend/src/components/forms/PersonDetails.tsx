@@ -7,6 +7,7 @@ const PersonDetails = () => {
   const [birthdate, setBirthdate] = useState("");
   const [telephone, setTelephone] = useState("");
   const [address, setAddress] = useState("");
+  const [nationality, setNationality] = useState("");
   const [jobTitle, setJobTitle] = useState("");
   const [description, setDescription] = useState("");
   const [errors, setErrors] = useState({
@@ -15,6 +16,7 @@ const PersonDetails = () => {
     birthdate: "",
     telephone: "",
     address: "",
+    nationality: "",
     jobTitle: "",
     description: "",
     image: "",
@@ -39,6 +41,7 @@ const PersonDetails = () => {
       birthdate: birthdate ? "" : "Birthdate is required",
       telephone: telephone ? "" : "Telephone is required",
       address: address ? "" : "Address is required",
+      nationality: nationality ? "" : "nationality is required",
       jobTitle: jobTitle ? "" : "Job Title is required",
       description: description ? "" : "Description is required",
       image: imageSrc ? "" : "Image is required",
@@ -153,6 +156,25 @@ const PersonDetails = () => {
         )}
       </div>
       <div className="flex flex-col items-start gap-2 w-4/5 relative">
+        <label className="" htmlFor="nationality">
+          Nationality
+        </label>
+        <input
+          value={nationality}
+          onChange={(e) => setNationality(e.target.value)}
+          type="text"
+          name="nationality"
+          id="nationality"
+          placeholder=""
+          className="p-2 rounded w-full bg-bg-light-1 dark:bg-bg-dark-1"
+        />
+        {errors.nationality && (
+          <p className="text-red-500 text-sm absolute -bottom-6">
+            {errors.nationality}
+          </p>
+        )}
+      </div>
+      <div className="flex flex-col items-start gap-2 w-4/5 relative">
         <label className="" htmlFor="jobtitle">
           Job Title
         </label>
@@ -212,7 +234,7 @@ const PersonDetails = () => {
         )}
       </div>
       <button type="submit" className="p-2 bg-primary text-white rounded w-4/5">
-        Submit
+        Register User
       </button>
     </form>
   );
