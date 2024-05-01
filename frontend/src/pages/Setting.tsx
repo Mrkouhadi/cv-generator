@@ -1,9 +1,8 @@
 import { useRef } from "react";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
-import Barcode from "../assets/images/barcode.jpeg";
 import { SendPdfFile } from "../../wailsjs/go/main/App";
-import PersonDetails from "../components/forms/PersonDetails";
+import Canadian1 from "../components/templates/Canadian1";
 
 const Setting = () => {
   const pdfRef = useRef(null);
@@ -14,8 +13,12 @@ const Setting = () => {
         console.error("pdfRef is null");
         return;
       }
-
-      const data = await html2canvas(pdfRef.current, { scale: 2 });
+      // https://html2canvas.hertzen.com/configuration
+      const data = await html2canvas(pdfRef.current, {
+        scale: 2,
+        // width: 791,
+        // height: 1120,
+      });
       const imgData = data.toDataURL("image/jpeg", 1.0);
 
       const pdf = new jsPDF();
@@ -36,18 +39,15 @@ const Setting = () => {
 
   return (
     <div className="min-h-screen p-4">
-      <div
-        id="pdf"
-        ref={pdfRef}
-        className="m-8 p-4 h-[80%] flex flex-col items-center"
-      >
-        <PersonDetails />
+      <div id="pdf" ref={pdfRef} className=" flex flex-col items-center">
+        {/* a template to be converted to a pdf */}
+        <Canadian1 />
       </div>
 
       <button
         onClick={createPDF}
         type="button"
-        className="p-4 bg-primary text-white"
+        className="p-4 bg-primary text-white mt-4"
       >
         DOWNLOAD MY CV
       </button>

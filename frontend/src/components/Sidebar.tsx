@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import DarkMode from "./DarkMode";
 import LanguageToggler from "./LanguageToggler";
 import logo from "../assets/images/appicon.png";
@@ -15,9 +15,12 @@ const Sidebar = () => {
 
   return (
     <aside className="bg-bg-light-2 dark:bg-bg-dark-2 h-screen w-36 flex flex-col items-center justify-between gap-4">
-      <div className="h-16 w-full flex items-center justify-center shadow dark:shadow-bg-dark-1">
-        <img src={logo} className="h-24" />
-      </div>
+      <Link
+        to="/"
+        className="h-16 w-full flex items-center justify-center shadow dark:shadow-bg-dark-1"
+      >
+        <img src={logo} className="h-14 w-14" />
+      </Link>
       <nav className="mt-8 flex flex-col items-center gap-4 flex-1 text-font-dark-2 dark:text-font-light-2">
         <NavLink
           to="/"
