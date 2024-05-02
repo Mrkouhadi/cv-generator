@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { AddExperience } from "../../../wailsjs/go/main/App";
+import { Experience as ExperienceType } from "../../utils/types";
 
 const Experience = () => {
   const [field, setField] = useState("");
@@ -37,7 +39,29 @@ const Experience = () => {
     // Check if there are no validation errors
     const isValid = Object.values(newErrors).every((error) => error === "");
     if (isValid) {
+      let exp: ExperienceType = {
+        UserID: 6,
+        Field: field,
+        Company: company,
+        StartDate: new Date(startDate),
+        EndDate: new Date(endDate),
+        Country: country,
+        City: city,
+        JobTitle: jobTitle,
+        Description: desc,
+      };
+      AddExperience(JSON.stringify(exp)).then((d) => {
+        console.log(d);
+      });
       console.log("Form submitted successfully"); // FIXME: a modal to show the success message
+      setField("");
+      setCompany("");
+      setCountry("");
+      setCity("");
+      setJobTitle("");
+      setStartDate("");
+      setEndDate("");
+      setDesc("");
     } else {
       console.log("Form contains errors. Please fix them before submitting."); // FIXME: a modal to show the error
     }
@@ -113,7 +137,7 @@ const Experience = () => {
           <input
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
-            type="text"
+            type="date"
             name="expstartDate"
             id="expstartDate"
             placeholder=""
@@ -132,7 +156,7 @@ const Experience = () => {
           <input
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
-            type="text"
+            type="date"
             name="expendDate"
             id="expendDate"
             placeholder=""

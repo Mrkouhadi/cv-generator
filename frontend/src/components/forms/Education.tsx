@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { AddEducation } from "../../../wailsjs/go/main/App";
+import { Education as EducationType } from "../../utils/types";
 
 const Education = () => {
   const [degree, setDegree] = useState("");
@@ -33,7 +35,27 @@ const Education = () => {
     // Check if there are no validation errors
     const isValid = Object.values(newErrors).every((error) => error === "");
     if (isValid) {
+      let edu: EducationType = {
+        UserID: 6,
+        Degree: degree,
+        Major: major,
+        University: university,
+        StartDate: new Date(startDate),
+        EndDate: new Date(endDate),
+        Country: country,
+        City: city,
+      };
+      AddEducation(JSON.stringify(edu)).then((d) => {
+        console.log(d);
+      });
       console.log("Form submitted successfully"); // FIXME: a modal to show the success message
+      setDegree("");
+      setMajor("");
+      setUniversity("");
+      setStartDate("");
+      setEndDate("");
+      setCountry("");
+      setCity("");
     } else {
       console.log("Form contains errors. Please fix them before submitting."); // FIXME: a modal to show the error
     }
@@ -111,7 +133,7 @@ const Education = () => {
           <input
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
-            type="text"
+            type="date"
             name="startDate"
             id="startDate"
             placeholder=""
@@ -130,7 +152,7 @@ const Education = () => {
           <input
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
-            type="text"
+            type="date"
             name="endDate"
             id="endDate"
             placeholder=""

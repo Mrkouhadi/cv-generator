@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { AddUser } from "../../../wailsjs/go/main/App";
-const PersonDetails = () => {
+import { User } from "../../utils/types";
+
+const PersonDetails = (props: any) => {
   const [imageSrc, setImageSrc] = useState<any>();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
@@ -50,20 +52,31 @@ const PersonDetails = () => {
     // Check if there are no validation errors
     const isValid = Object.values(newErrors).every((error) => error === "");
     if (isValid) {
-      AddUser({
-        fullName,
-        email,
-        birthdate,
-        telephone,
-        address,
-        nationality,
-        jobTitle,
-        description,
-        imageSrc,
-      }).then((d) => {
+      let u: User = {
+        Name: fullName,
+        Email: email,
+        Photo: imageSrc,
+        Birthdate: new Date(birthdate),
+        Telephone: telephone,
+        Address: address,
+        Nationality: nationality,
+        JobTitle: jobTitle,
+        Description: description,
+      };
+      AddUser(JSON.stringify(u)).then((d) => {
         console.log(d);
+        props.setCurrentComponentIndex((prev: number) => prev + 1);
       });
       console.log("Form submitted successfully"); // FIXME: a modal to show the success message
+      setFullName("");
+      setEmail("");
+      setImageSrc("");
+      setTelephone("");
+      setBirthdate("");
+      setAddress("");
+      setJobTitle("");
+      setDescription("");
+      setNationality("");
     } else {
       console.log("Form contains errors. Please fix them before submitting."); // FIXME: a modal to show the error
     }
@@ -121,7 +134,6 @@ const PersonDetails = () => {
           type="date"
           name="birthdate"
           id="birthdate"
-          placeholder=""
           className="p-2 rounded w-full bg-bg-light-1 dark:bg-bg-dark-1"
         />
         {errors.birthdate && (

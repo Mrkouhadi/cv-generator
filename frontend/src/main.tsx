@@ -42,7 +42,7 @@ ReactDOM.createRoot(container as HTMLElement).render(
         <main className=" min-h-screen max-h-screen flex overflow-hidden">
           <HashRouter basename="/">
             <Sidebar />
-            <div className="overflow-y-auto h-screen w-full bg-bg-light-1 dark:bg-bg-dark-1">
+            <div className="overflow-y-auto h-screen w-full bg-bg-light-2 dark:bg-bg-dark-1 text-font-light-2 dark:text-font-dark-1 ">
               <Routes>
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/setting" element={<Setting />} />

@@ -6,7 +6,7 @@ const Dashboard = () => {
   return (
     <div
       id="pdf-content"
-      className="m\h-full flex flex-col items-center justify-center p-12"
+      className="m\h-full flex flex-col items-center justify-center p-4 min-h-screen"
     >
       <h1>{t("sidebar.dashboard")}</h1>
       <Canadian1 />

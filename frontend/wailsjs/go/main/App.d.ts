@@ -3,15 +3,15 @@
 import {main} from '../models';
 import {sql} from '../models';
 
-export function AddEducation(arg1:main.Education):Promise<void>;
+export function AddEducation(arg1:string):Promise<void>;
 
-export function AddExperience(arg1:main.Experience):Promise<void>;
+export function AddExperience(arg1:string):Promise<void>;
 
-export function AddLanguage(arg1:main.Language):Promise<void>;
+export function AddLanguage(arg1:string):Promise<void>;
 
-export function AddSkill(arg1:main.Skill):Promise<void>;
+export function AddSkill(arg1:string):Promise<void>;
 
-export function AddUser(arg1:main.User):Promise<void>;
+export function AddUser(arg1:string):Promise<void>;
 
 export function DeleteAllEducation():Promise<void>;
 
@@ -33,13 +33,13 @@ export function DeleteSkillByID(arg1:number):Promise<void>;
 
 export function DeleteUserByID(arg1:number):Promise<void>;
 
-export function GetAllEducation():Promise<Array<main.Education>>;
+export function GetAllEducation(arg1:number):Promise<Array<main.Education>>;
 
-export function GetAllExperience():Promise<Array<main.Experience>>;
+export function GetAllExperience(arg1:number):Promise<Array<main.Experience>>;
 
-export function GetAllLanguages():Promise<Array<main.Language>>;
+export function GetAllLanguages(arg1:number):Promise<Array<main.Language>>;
 
-export function GetAllSkills():Promise<Array<main.Skill>>;
+export function GetAllSkills(arg1:number):Promise<Array<main.Skill>>;
 
 export function GetAllUsers():Promise<Array<main.User>>;
 
@@ -54,8 +54,6 @@ export function GetSkillByID(arg1:number):Promise<main.Skill>;
 export function GetUserByID(arg1:number):Promise<main.User>;
 
 export function Greet(arg1:string):Promise<string>;
-
-export function SaveFile(arg1:string,arg2:string,arg3:string,arg4:string,arg5:string):Promise<string>;
 
 export function SendPdfFile(arg1:string,arg2:string):Promise<void>;
 

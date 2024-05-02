@@ -62,20 +62,20 @@ export function DeleteUserByID(arg1) {
   return window['go']['main']['App']['DeleteUserByID'](arg1);
 }
 
-export function GetAllEducation() {
-  return window['go']['main']['App']['GetAllEducation']();
+export function GetAllEducation(arg1) {
+  return window['go']['main']['App']['GetAllEducation'](arg1);
 }
 
-export function GetAllExperience() {
-  return window['go']['main']['App']['GetAllExperience']();
+export function GetAllExperience(arg1) {
+  return window['go']['main']['App']['GetAllExperience'](arg1);
 }
 
-export function GetAllLanguages() {
-  return window['go']['main']['App']['GetAllLanguages']();
+export function GetAllLanguages(arg1) {
+  return window['go']['main']['App']['GetAllLanguages'](arg1);
 }
 
-export function GetAllSkills() {
-  return window['go']['main']['App']['GetAllSkills']();
+export function GetAllSkills(arg1) {
+  return window['go']['main']['App']['GetAllSkills'](arg1);
 }
 
 export function GetAllUsers() {
@@ -104,10 +104,6 @@ export function GetUserByID(arg1) {
 
 export function Greet(arg1) {
   return window['go']['main']['App']['Greet'](arg1);
-}
-
-export function SaveFile(arg1, arg2, arg3, arg4, arg5) {
-  return window['go']['main']['App']['SaveFile'](arg1, arg2, arg3, arg4, arg5);
 }
 
 export function SendPdfFile(arg1, arg2) {
