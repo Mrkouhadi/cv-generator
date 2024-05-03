@@ -110,6 +110,10 @@ export function SendPdfFile(arg1, arg2) {
   return window['go']['main']['App']['SendPdfFile'](arg1, arg2);
 }
 
+export function SendPngFile(arg1) {
+  return window['go']['main']['App']['SendPngFile'](arg1);
+}
+
 export function UpdateEducation(arg1) {
   return window['go']['main']['App']['UpdateEducation'](arg1);
 }

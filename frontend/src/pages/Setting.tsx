@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
-import { SendPdfFile } from "../../wailsjs/go/main/App";
+import { SendPdfFile, SendPngFile } from "../../wailsjs/go/main/App";
 import Canadian1 from "../components/templates/Canadian1";
 
 const Setting = () => {
@@ -35,19 +35,50 @@ const Setting = () => {
     }
   };
 
+  const createPNG = async () => {
+    try {
+      if (!pdfRef.current) {
+        console.error("componentRef is null");
+        return;
+      }
+
+      // Capture the component as an image using html2canvas
+      const canvas = await html2canvas(pdfRef.current, {
+        scale: 2, // Adjust scale if needed
+      });
+
+      // Convert the canvas to a data URL representing a PNG image
+      const imageData = canvas.toDataURL("image/png");
+
+      // You can now send imageData to your backend or save it locally
+      console.log("PNG image data:", imageData);
+      await SendPngFile(JSON.stringify({ imageData }));
+    } catch (error) {
+      console.error("Error creating PNG:", error);
+    }
+  };
   return (
     <div className="min-h-screen p-4">
       <div id="pdf" ref={pdfRef} className=" flex flex-col items-center">
         {/* a template to be converted to a pdf */}
         <Canadian1 />
       </div>
-      <button
-        onClick={createPDF}
-        type="button"
-        className="p-4 bg-primary text-white mt-4"
-      >
-        DOWNLOAD MY CV
-      </button>
+      <div className="flex items-center justify-between px-5">
+        <button
+          onClick={createPDF}
+          type="button"
+          className="p-4 bg-primary text-white mt-4"
+        >
+          DOWNLOAD MY CV as PDF
+        </button>
+        <button
+          onClick={createPNG}
+          type="button"
+          className="p-4 bg-primary text-white mt-4"
+        >
+          DOWNLOAD MY CV as PNG
+        </button>
+      </div>
     </div>
   );
 };
