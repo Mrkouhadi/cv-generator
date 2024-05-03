@@ -100,3 +100,39 @@ func SavePDFFile(ctx context.Context, title string, defaultFilename string, _ st
 	}
 	return file // returns complete path of the saved file
 }
+
+func SavePngFile(ctx context.Context, title string, defaultFilename string, _ string, _ string, base64Content string) string {
+	file, err := runtime.SaveFileDialog(ctx, runtime.SaveDialogOptions{
+		Title:           title,
+		DefaultFilename: defaultFilename,
+		Filters: []runtime.FileFilter{
+			{
+				DisplayName: "Image Files (*.png)",
+				Pattern:     "*.png",
+			},
+		},
+		ShowHiddenFiles:            true,
+		CanCreateDirectories:       true,
+		TreatPackagesAsDirectories: true,
+	})
+	if err != nil {
+		fmt.Println("User Cancelled the File Dialog.", err)
+		return ""
+	}
+	b64data := base64Content[strings.IndexByte(base64Content, ',')+1:]
+
+	// Decode the base64 content
+	decodedContent, err := base64.StdEncoding.DecodeString(b64data)
+	if err != nil {
+		fmt.Println("Error decoding base64 content:", err)
+		return ""
+	}
+
+	// Write the decoded content to the selected file
+	err = os.WriteFile(file, decodedContent, 0644)
+	if err != nil {
+		fmt.Println("Error writing file:", err)
+		return ""
+	}
+	return file // returns complete path of the saved file
+}
