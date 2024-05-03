@@ -51,3 +51,18 @@ func (a *App) SendPdfFile(file, name string) {
 	}
 	_ = SavePDFFile(a.ctx, name, "cv-builder-"+name+".pdf", "", "", requestData.PdfData)
 }
+
+// ///////
+type RequestImgData struct {
+	ImageData string `json:"imageData"`
+}
+
+func (a *App) SendPngFile(file string) {
+	var requestData RequestImgData
+	err := json.Unmarshal([]byte(file), &requestData)
+	if err != nil {
+		fmt.Println("Error unmarshalling JSON:", err)
+		return
+	}
+	_ = SavePngFile(a.ctx, "cv-builder", "cv-builder"+".png", "", "", requestData.ImageData)
+}
