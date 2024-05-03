@@ -56,6 +56,8 @@ export function Greet(arg1:string):Promise<string>;
 
 export function SendPdfFile(arg1:string,arg2:string):Promise<void>;
 
+export function SendPngFile(arg1:string):Promise<void>;
+
 export function UpdateEducation(arg1:main.Education):Promise<void>;
 
 export function UpdateExperience(arg1:main.Experience):Promise<void>;

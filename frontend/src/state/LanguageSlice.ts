@@ -42,7 +42,6 @@ const languageSlice = createSlice({
   }
 });
 
-
 export default languageSlice.reducer;
 export const selectAllLanguages= (state: RootState) => state.language.languages;
 export const selectLanguageByID = (state: RootState, languageID: number) => 
