@@ -1,13 +1,19 @@
 {
-    "sidebar": {
-        "dashboard": "tableau de bord",
-        "setting": "Paramètre",
-        "history": "Histoire"
-    },
     "language": {
         "en": "English",
         "de": "Deutsch",
         "zh": "中文",
         "fr": "Français"
+    },
+    "sidebar": {
+        "dashboard": "tableau de bord",
+        "setting": "Paramètre",
+        "templates": "Modèles"
+    },
+    "button": {
+        "register": "Registre",
+        "add": "Ajouter",
+        "update": "Mettre à jour",
+        "delete": "Supprimer"
     }
 }

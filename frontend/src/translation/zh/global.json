@@ -1,13 +1,19 @@
 {
-    "sidebar": {
-        "dashboard": "仪表板",
-        "setting": "环境",
-        "history": "历史"
-    },
     "language": {
         "en": "English",
         "de": "Deutsch",
         "zh": "中文",
         "fr": "Français"
+    },
+    "sidebar": {
+        "dashboard": "仪表板",
+        "setting": "环境",
+        "templates": "模板"
+    },
+    "button": {
+        "register": "登记",
+        "add": "添加",
+        "update": "更新",
+        "delete": "删除"
     }
 }
