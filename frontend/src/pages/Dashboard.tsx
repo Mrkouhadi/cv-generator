@@ -1,15 +1,14 @@
 import { useTranslation } from "react-i18next";
-import Canadian1 from "../components/templates/Canadian1";
+import Users from "../components/Users";
 
 const Dashboard = () => {
   const { t, i18n } = useTranslation("global");
   return (
-    <div
-      id="pdf-content"
-      className="m\h-full flex flex-col items-center justify-center p-4 min-h-screen"
-    >
+    <div className="flex flex-col items-center p-4 min-h-screen">
       <h1>{t("sidebar.dashboard")}</h1>
-      <Canadian1 />
+      <hr />
+
+      <Users />
     </div>
   );
 };

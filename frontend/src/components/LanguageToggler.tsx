@@ -24,15 +24,16 @@ const LanguageToggler: React.FC = () => {
     <div className="relative w-full">
       <div
         onClick={() => setOpen(!open)}
-        className="flex justify-center items-center gap-3"
+        className="flex justify-around items-center gap-3"
       >
         <button className="text-font-light-1 dark:text-font-dark-1 cursor-pointer">
           {t("language." + activeLanguage)}{" "}
         </button>
         <GlobeEuropeAfricaIcon className="size-6 text-font-light-1 dark:text-font-dark-1 cursor-pointer" />
       </div>
+
       <div
-        className={`min-w-24 bg-primary flex flex-col gap-2 absolute p-4 -bottom-72 left-36 duration-500 transition-transform ${
+        className={`min-w-24 bg-primary flex flex-col gap-2 absolute p-4 -bottom-72 left-36 transition-transform ${
           open ? "bottom-0 translate-y-0" : "translate-y-full"
         }`}
       >

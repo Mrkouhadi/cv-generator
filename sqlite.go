@@ -4,6 +4,8 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"log"
+	"os"
 
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -203,7 +205,20 @@ func (app *App) AddLanguage(data string) error {
 
 // 3. ****************************************************
 // *********************************Update Data in the Database**:
-func (app *App) UpdateUser(db *sql.DB, user User) error {
+func (app *App) UpdateUser(data string) error {
+	var user User
+	err := json.Unmarshal([]byte(data), &user)
+	if err != nil {
+		fmt.Println("Error unmarshalling JSON:", err)
+		return nil
+	}
+	// saving the image file and getting back the path to store it in the database
+	imgPath, err := SaveImage(user.Photo, user.Name+user.JobTitle)
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
+
 	stmt, err := app.Db.Prepare(`UPDATE users 
 		SET name=?, email=?, photo=?, birthdate=?, telephone=?, address=?, nationality=?, job_title=?, description=?
 		WHERE id=?`)
@@ -212,7 +227,7 @@ func (app *App) UpdateUser(db *sql.DB, user User) error {
 	}
 	defer stmt.Close()
 
-	_, err = stmt.Exec(user.Name, user.Email, user.Photo, user.Birthdate, user.Telephone, user.Address, user.Nationality, user.JobTitle, user.Description, user.ID)
+	_, err = stmt.Exec(user.Name, user.Email, imgPath, user.Birthdate, user.Telephone, user.Address, user.Nationality, user.JobTitle, user.Description, user.ID)
 	if err != nil {
 		return err
 	}
@@ -285,10 +300,10 @@ func (app *App) UpdateLanguage(language Language) error {
 
 // 4. **. ****************************************************
 // *********************************Get All Items of a specific user
-func (app *App) GetAllUsers() ([]User, error) {
+func (app *App) GetAllUsers() []User {
 	rows, err := app.Db.Query("SELECT * FROM users")
 	if err != nil {
-		return nil, err
+		return nil
 	}
 	defer rows.Close()
 	var users []User
@@ -296,14 +311,14 @@ func (app *App) GetAllUsers() ([]User, error) {
 		var user User
 		err := rows.Scan(&user.ID, &user.Name, &user.Email, &user.Photo, &user.Birthdate, &user.Telephone, &user.Address, &user.Nationality, &user.JobTitle, &user.Description)
 		if err != nil {
-			return nil, err
+			return nil
 		}
 		users = append(users, user)
 	}
 	if err := rows.Err(); err != nil {
-		return nil, err
+		return nil
 	}
-	return users, nil
+	return users
 }
 
 func (app *App) GetAllEducation(userID int) ([]Education, error) {
@@ -465,10 +480,16 @@ func (app *App) GetLanguageByID(languageID int) (*Language, error) {
 // 6. **. ****************************************************
 // *********************************Delete an Item from the Database**:
 //   - Execute a `DELETE` query to remove a specific row:
-func (app *App) DeleteUserByID(userID int) error {
+func (app *App) DeleteUserByID(userID int, filename string) error {
+
 	_, err := app.Db.Exec("DELETE FROM users WHERE id = ?", userID)
 	if err != nil {
 		return err
+	}
+	// delete the image as well
+	err = os.Remove(filename)
+	if err != nil {
+		log.Println("user deleted but the profile photo could not be removed. Please do it manually by going to ./data/images directory")
 	}
 	return nil
 }

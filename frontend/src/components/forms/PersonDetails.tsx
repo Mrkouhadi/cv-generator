@@ -1,8 +1,14 @@
-import { useState } from "react";
-import { AddUser } from "../../../wailsjs/go/main/App";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../state/store";
+import { addUser, updateUser } from "../../state/UserSlice";
 import { User } from "../../utils/types";
+interface PersonDetailsProps {
+  userTobeUpdated?: User;
+}
+const PersonDetails = ({ userTobeUpdated }: PersonDetailsProps) => {
+  const dispatch: AppDispatch = useDispatch();
 
-const PersonDetails = (props: any) => {
   const [imageSrc, setImageSrc] = useState<any>();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
@@ -63,10 +69,12 @@ const PersonDetails = (props: any) => {
         JobTitle: jobTitle,
         Description: description,
       };
-      AddUser(JSON.stringify(u)).then((d) => {
-        console.log(d);
-        props.setCurrentComponentIndex((prev: number) => prev + 1);
-      });
+      if (userTobeUpdated) {
+        u.ID = userTobeUpdated.ID;
+        dispatch(updateUser(u));
+      } else {
+        dispatch(addUser(u));
+      }
       console.log("Form submitted successfully"); // FIXME: a modal to show the success message
       setFullName("");
       setEmail("");
@@ -81,6 +89,21 @@ const PersonDetails = (props: any) => {
       console.log("Form contains errors. Please fix them before submitting."); // FIXME: a modal to show the error
     }
   };
+
+  // for update: if this form has received data to be updated we will populate the inputs first
+  useEffect(() => {
+    if (userTobeUpdated) {
+      setFullName(userTobeUpdated.Name);
+      setEmail(userTobeUpdated.Email);
+      setImageSrc(userTobeUpdated.Photo);
+      setTelephone(userTobeUpdated.Telephone);
+      setBirthdate(JSON.stringify(userTobeUpdated.Birthdate));
+      setAddress(userTobeUpdated.Address);
+      setJobTitle(userTobeUpdated.JobTitle);
+      setDescription(userTobeUpdated.Description);
+      setNationality(userTobeUpdated.Nationality);
+    }
+  }, [userTobeUpdated]);
 
   return (
     <form
@@ -259,7 +282,7 @@ const PersonDetails = (props: any) => {
         )}
       </div>
       <button type="submit" className="p-2 bg-primary text-white rounded w-4/5">
-        Register User
+        {userTobeUpdated ? "Update user" : "Register User"}
       </button>
     </form>
   );

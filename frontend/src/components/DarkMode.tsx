@@ -38,7 +38,7 @@ const DarkMode = () => {
         onClick={() => handleThemeSwitch("dark")}
         className={`${
           theme === "dark" && "bg-bg-dark-2 text-font-dark-1"
-        } h-8 w-16 duration-200 flex items-center justify-center rounded-full cursor-pointer text-font-dark-1 transition-colors`}
+        } h-8 w-16 flex items-center justify-center rounded-full cursor-pointer text-font-dark-1 transition-colors`}
       >
         <MoonIcon className="size-6 text-font-dark-1" />
       </p>
@@ -46,7 +46,7 @@ const DarkMode = () => {
         onClick={() => handleThemeSwitch("light")}
         className={`${
           theme === "light" && "bg-bg-light-1 text-font-light-1"
-        } h-8 w-16 duration-200 flex items-center justify-center rounded-full cursor-pointer text-font-dark-1 transition-colors`}
+        } h-8 w-16 flex items-center justify-center rounded-full cursor-pointer text-font-dark-1 transition-colors`}
       >
         <SunIcon className="size-6 text-font-light-1 dark:text-font-dark-1 " />
       </p>

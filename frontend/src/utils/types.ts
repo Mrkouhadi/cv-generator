@@ -1,8 +1,9 @@
 export type User = {
+    ID?:number
     Name:string
     Email:string
-    Photo?:string
-    Birthdate?:Date
+    Photo:string
+    Birthdate:Date
     Telephone:string
     Address:string
     Nationality:string
@@ -10,7 +11,8 @@ export type User = {
     Description:string
 }
 export type Education = {
-    readonly UserID:number
+    ID?:number
+    UserID:number
     Degree:string
     Major:string
     University:string
@@ -20,7 +22,8 @@ export type Education = {
     EndDate:Date
 }
 export type Experience = {
-    readonly UserID:number
+    ID?:number
+    UserID:number
     Field:string
     JobTitle:string
     Company:string
@@ -31,12 +34,14 @@ export type Experience = {
     EndDate:Date
 }
 export type Skill={
-    readonly UserID:number
+    ID?:number
+    UserID:number
     Title:string
     Proficiency:string
 }
 export type Language={
-    readonly UserID:number
+    ID?:number
+    UserID:number
     Language:string
     Proficiency:string
 }
