@@ -6,8 +6,8 @@ type User struct {
 	ID          int
 	Name        string
 	Email       string
-	Photo       *string
-	Birthdate   *time.Time
+	Photo       string
+	Birthdate   time.Time
 	Telephone   string
 	Address     string
 	Nationality string
@@ -43,7 +43,6 @@ type Experience struct {
 type Skill struct {
 	ID          int
 	UserID      int
-	Type        string
 	Title       string
 	Proficiency string
 }

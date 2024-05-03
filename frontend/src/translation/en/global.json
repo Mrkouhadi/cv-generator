@@ -2,12 +2,18 @@
     "sidebar": {
         "dashboard": "Dashboard",
         "setting": "Setting",
-        "history": "History"
+        "templates": "Templates"
     },
     "language": {
         "en": "English",
         "de": "Deutsch",
         "zh": "中文",
         "fr": "Français"
+    },
+    "button": {
+        "register": "Register",
+        "add": "Add",
+        "update": "Update",
+        "delete": "Delete"
     }
 }

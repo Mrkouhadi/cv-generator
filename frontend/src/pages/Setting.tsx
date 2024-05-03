@@ -16,8 +16,6 @@ const Setting = () => {
       // https://html2canvas.hertzen.com/configuration
       const data = await html2canvas(pdfRef.current, {
         scale: 2,
-        // width: 791,
-        // height: 1120,
       });
       const imgData = data.toDataURL("image/jpeg", 1.0);
 
@@ -43,7 +41,6 @@ const Setting = () => {
         {/* a template to be converted to a pdf */}
         <Canadian1 />
       </div>
-
       <button
         onClick={createPDF}
         type="button"

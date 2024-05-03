@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"encoding/json"
 	"fmt"
 
 	_ "github.com/mattn/go-sqlite3"
@@ -17,55 +18,54 @@ func InitializeSqlite() (*sql.DB, error) {
 	// Create tables if they don't exist
 	queries := []string{
 		`CREATE TABLE IF NOT EXISTS users (
-			id INTEGER PRIMARY KEY,
-			name TEXT,
-			email TEXT,
-			photo TEXT,
-			birthdate TIMESTAMP,
-			telephone TEXT,
-			address TEXT,
-			nationality TEXT,
-			job_title TEXT,
-			description TEXT
+			id INTEGER PRIMARY KEY AUTOINCREMENT,
+			name TEXT NOT NULL,
+			email TEXT NOT NULL,
+			photo TEXT NOT NULL,
+			birthdate TIMESTAMP NOT NULL,
+			telephone TEXT NOT NULL,
+			address TEXT NOT NULL,
+			nationality TEXT NOT NULL,
+			job_title TEXT NOT NULL,
+			description TEXT NOT NULL
 		)`,
-		`CREATE TABLE IF NOT EXISTS educations (
-			id INTEGER PRIMARY KEY,
-			user_id INTEGER,
-			degree TEXT,
-			major TEXT,
-			university TEXT,
-			country TEXT,
-			city TEXT,
-			start_date TIMESTAMP,
-			end_date TIMESTAMP,
+		`CREATE TABLE IF NOT EXISTS education (
+			id INTEGER PRIMARY KEY AUTOINCREMENT,
+			user_id INTEGER NOT NULL,
+			degree TEXT NOT NULL,
+			major TEXT NOT NULL,
+			university TEXT NOT NULL,
+			country TEXT NOT NULL,
+			city TEXT NOT NULL,
+			start_date TIMESTAMP NOT NULL,
+			end_date TIMESTAMP NOT NULL,
 			FOREIGN KEY(user_id) REFERENCES users(id)
 		)`,
-		`CREATE TABLE IF NOT EXISTS experiences (
-			id INTEGER PRIMARY KEY,
-			user_id INTEGER,
-			field TEXT,
-			job_title TEXT,
-			company TEXT,
-			country TEXT,
-			city TEXT,
-			description TEXT,
-			start_date TIMESTAMP,
-			end_date TIMESTAMP,
+		`CREATE TABLE IF NOT EXISTS experience (
+			id INTEGER PRIMARY KEY AUTOINCREMENT,
+			user_id INTEGER NOT NULL,
+			field TEXT NOT NULL,
+			job_title TEXT NOT NULL,
+			company TEXT NOT NULL,
+			country TEXT NOT NULL,
+			city TEXT NOT NULL,
+			description TEXT NOT NULL,
+			start_date TIMESTAMP NOT NULL,
+			end_date TIMESTAMP NOT NULL,
 			FOREIGN KEY(user_id) REFERENCES users(id)
 		)`,
-		`CREATE TABLE IF NOT EXISTS skills (
-			id INTEGER PRIMARY KEY,
-			user_id INTEGER,
-			type TEXT,
-			title TEXT,
-			proficiency TEXT,
+		`CREATE TABLE IF NOT EXISTS skill (
+			id INTEGER PRIMARY KEY AUTOINCREMENT,
+			user_id INTEGER NOT NULL,
+			title TEXT NOT NULL,
+			proficiency TEXT NOT NULL,
 			FOREIGN KEY(user_id) REFERENCES users(id)
 		)`,
-		`CREATE TABLE IF NOT EXISTS languages (
-			id INTEGER PRIMARY KEY,
-			user_id INTEGER,
-			language TEXT,
-			proficiency TEXT,
+		`CREATE TABLE IF NOT EXISTS language (
+			id INTEGER PRIMARY KEY AUTOINCREMENT,
+			user_id INTEGER NOT NULL,
+			language TEXT NOT NULL,
+			proficiency TEXT NOT NULL,
 			FOREIGN KEY(user_id) REFERENCES users(id)
 		)`,
 	}
@@ -81,7 +81,19 @@ func InitializeSqlite() (*sql.DB, error) {
 
 // 2. ****************************************************
 // *******************************Insert Data into the Database**:
-func (app *App) AddUser(user User) error {
+func (app *App) AddUser(data string) error {
+	var user User
+	err := json.Unmarshal([]byte(data), &user)
+	if err != nil {
+		fmt.Println("Error unmarshalling JSON:", err)
+		return nil
+	}
+	// saving the image file and getting back the path to store it in the database
+	imgPath, err := SaveImage(user.Photo, user.Name+user.JobTitle)
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
 	// Prepare SQL statement for inserting user
 	stmt, err := app.Db.Prepare(`INSERT INTO users
 		(name, email, photo, birthdate, telephone, address, nationality, job_title, description)
@@ -91,13 +103,20 @@ func (app *App) AddUser(user User) error {
 	}
 	defer stmt.Close()
 	// Execute SQL statement with user data
-	_, err = stmt.Exec(user.Name, user.Email, user.Photo, user.Birthdate, user.Telephone, user.Address, user.Nationality, user.JobTitle, user.Description)
+	_, err = stmt.Exec(user.Name, user.Email, imgPath, user.Birthdate, user.Telephone, user.Address, user.Nationality, user.JobTitle, user.Description)
 	if err != nil {
 		return err
 	}
 	return nil
 }
-func (app *App) AddEducation(education Education) error {
+
+func (app *App) AddEducation(data string) error {
+	var education Education
+	err := json.Unmarshal([]byte(data), &education)
+	if err != nil {
+		fmt.Println("Error unmarshalling JSON:", err)
+		return nil
+	}
 	stmt, err := app.Db.Prepare(`INSERT INTO education 
 		(user_id, degree, major, university, country, city, start_date, end_date)
 		VALUES (?, ?, ?, ?, ?, ?, ?, ?)`)
@@ -110,11 +129,16 @@ func (app *App) AddEducation(education Education) error {
 	if err != nil {
 		return err
 	}
-
 	return nil
 }
 
-func (app *App) AddExperience(experience Experience) error {
+func (app *App) AddExperience(data string) error {
+	var experience Experience
+	err := json.Unmarshal([]byte(data), &experience)
+	if err != nil {
+		fmt.Println("Error unmarshalling JSON:", err)
+		return nil
+	}
 	stmt, err := app.Db.Prepare(`INSERT INTO experience 
 		(user_id, field, job_title, company, country, city, description, start_date, end_date)
 		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`)
@@ -131,16 +155,22 @@ func (app *App) AddExperience(experience Experience) error {
 	return nil
 }
 
-func (app *App) AddSkill(skill Skill) error {
+func (app *App) AddSkill(data string) error {
+	var skill Skill
+	err := json.Unmarshal([]byte(data), &skill)
+	if err != nil {
+		fmt.Println("Error unmarshalling JSON:", err)
+		return nil
+	}
 	stmt, err := app.Db.Prepare(`INSERT INTO skill 
-		(user_id, type, title, proficiency)
-		VALUES (?, ?, ?, ?)`)
+		(user_id, title, proficiency)
+		VALUES (?, ?, ?)`)
 	if err != nil {
 		return err
 	}
 	defer stmt.Close()
 
-	_, err = stmt.Exec(skill.UserID, skill.Type, skill.Title, skill.Proficiency)
+	_, err = stmt.Exec(skill.UserID, skill.Title, skill.Proficiency)
 	if err != nil {
 		return err
 	}
@@ -148,7 +178,13 @@ func (app *App) AddSkill(skill Skill) error {
 	return nil
 }
 
-func (app *App) AddLanguage(language Language) error {
+func (app *App) AddLanguage(data string) error {
+	var language Language
+	err := json.Unmarshal([]byte(data), &language)
+	if err != nil {
+		fmt.Println("Error unmarshalling JSON:", err)
+		return nil
+	}
 	stmt, err := app.Db.Prepare(`INSERT INTO language 
 		(user_id, language, proficiency)
 		VALUES (?, ?, ?)`)
@@ -219,13 +255,13 @@ func (app *App) UpdateExperience(experience Experience) error {
 
 func (app *App) UpdateSkill(skill Skill) error {
 	stmt, err := app.Db.Prepare(`UPDATE skill 
-		SET type=?, title=?, proficiency=?
+		SET title=?, proficiency=?
 		WHERE id=?`)
 	if err != nil {
 		return err
 	}
 	defer stmt.Close()
-	_, err = stmt.Exec(skill.Type, skill.Title, skill.Proficiency, skill.ID)
+	_, err = stmt.Exec(skill.Title, skill.Proficiency, skill.ID)
 	if err != nil {
 		return err
 	}
@@ -248,15 +284,13 @@ func (app *App) UpdateLanguage(language Language) error {
 }
 
 // 4. **. ****************************************************
-// *********************************Get All Items from the Database**:
-// - Retrieve all rows from the table using a `SELECT` query:
+// *********************************Get All Items of a specific user
 func (app *App) GetAllUsers() ([]User, error) {
 	rows, err := app.Db.Query("SELECT * FROM users")
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-
 	var users []User
 	for rows.Next() {
 		var user User
@@ -271,8 +305,12 @@ func (app *App) GetAllUsers() ([]User, error) {
 	}
 	return users, nil
 }
-func (app *App) GetAllEducation() ([]Education, error) {
-	rows, err := app.Db.Query("SELECT * FROM education")
+
+func (app *App) GetAllEducation(userID int) ([]Education, error) {
+	// Prepare the SQL query with a WHERE clause to filter by userID
+	query := "SELECT * FROM education WHERE user_id = ?"
+	// Execute the query with the provided userID
+	rows, err := app.Db.Query(query, userID)
 	if err != nil {
 		return nil, err
 	}
@@ -292,8 +330,9 @@ func (app *App) GetAllEducation() ([]Education, error) {
 	}
 	return educations, nil
 }
-func (app *App) GetAllExperience() ([]Experience, error) {
-	rows, err := app.Db.Query("SELECT * FROM experience")
+func (app *App) GetAllExperience(userID int) ([]Experience, error) {
+	query := "SELECT * FROM experience WHERE user_id = ?"
+	rows, err := app.Db.Query(query, userID)
 	if err != nil {
 		return nil, err
 	}
@@ -313,8 +352,10 @@ func (app *App) GetAllExperience() ([]Experience, error) {
 	}
 	return experiences, nil
 }
-func (app *App) GetAllSkills() ([]Skill, error) {
-	rows, err := app.Db.Query("SELECT * FROM skill")
+
+func (app *App) GetAllSkills(userID int) ([]Skill, error) {
+	query := "SELECT * FROM skill WHERE user_id = ?"
+	rows, err := app.Db.Query(query, userID)
 	if err != nil {
 		return nil, err
 	}
@@ -323,7 +364,7 @@ func (app *App) GetAllSkills() ([]Skill, error) {
 	var skills []Skill
 	for rows.Next() {
 		var skill Skill
-		err := rows.Scan(&skill.ID, &skill.UserID, &skill.Type, &skill.Title, &skill.Proficiency)
+		err := rows.Scan(&skill.ID, &skill.UserID, &skill.Title, &skill.Proficiency)
 		if err != nil {
 			return nil, err
 		}
@@ -334,8 +375,10 @@ func (app *App) GetAllSkills() ([]Skill, error) {
 	}
 	return skills, nil
 }
-func (app *App) GetAllLanguages() ([]Language, error) {
-	rows, err := app.Db.Query("SELECT * FROM language")
+
+func (app *App) GetAllLanguages(userID int) ([]Language, error) {
+	query := "SELECT * FROM language WHERE user_id = ?"
+	rows, err := app.Db.Query(query, userID)
 	if err != nil {
 		return nil, err
 	}
@@ -397,7 +440,7 @@ func (app *App) GetExperienceByID(experienceID int) (*Experience, error) {
 func (app *App) GetSkillByID(skillID int) (*Skill, error) {
 	var skill Skill
 	err := app.Db.QueryRow("SELECT * FROM skill WHERE id = ?", skillID).
-		Scan(&skill.ID, &skill.UserID, &skill.Type, &skill.Title, &skill.Proficiency)
+		Scan(&skill.ID, &skill.UserID, &skill.Title, &skill.Proficiency)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			return nil, fmt.Errorf("skill record with ID %d not found", skillID)

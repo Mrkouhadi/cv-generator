@@ -1,13 +1,19 @@
 {
-    "sidebar": {
-        "dashboard": "Armaturenbrett",
-        "setting": "Einstellung",
-        "history": "Geschichte"
-    },
     "language": {
         "en": "English",
         "de": "Deutsch",
         "zh": "中文",
         "fr": "Français"
+    },
+    "sidebar": {
+        "dashboard": "Armaturenbrett",
+        "setting": "Einstellung",
+        "templates": "Vorlagen"
+    },
+    "button": {
+        "register": "Registrieren",
+        "add": "Hinzufügen",
+        "update": "Aktualisieren",
+        "delete": "Löschen"
     }
 }

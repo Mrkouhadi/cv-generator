@@ -14,7 +14,7 @@ const Sidebar = () => {
   }, []);
 
   return (
-    <aside className="bg-bg-light-2 dark:bg-bg-dark-2 h-screen w-36 flex flex-col items-center justify-between gap-4">
+    <aside className="bg-bg-light-1 dark:bg-bg-dark-2 h-screen w-36 flex flex-col items-center justify-between gap-4">
       <Link
         to="/"
         className="h-16 w-full flex items-center justify-center shadow dark:shadow-bg-dark-1"
