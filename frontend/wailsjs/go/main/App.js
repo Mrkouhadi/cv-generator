@@ -58,8 +58,8 @@ export function DeleteSkillByID(arg1) {
   return window['go']['main']['App']['DeleteSkillByID'](arg1);
 }
 
-export function DeleteUserByID(arg1) {
-  return window['go']['main']['App']['DeleteUserByID'](arg1);
+export function DeleteUserByID(arg1, arg2) {
+  return window['go']['main']['App']['DeleteUserByID'](arg1, arg2);
 }
 
 export function GetAllEducation(arg1) {
@@ -126,6 +126,6 @@ export function UpdateSkill(arg1) {
   return window['go']['main']['App']['UpdateSkill'](arg1);
 }
 
-export function UpdateUser(arg1, arg2) {
-  return window['go']['main']['App']['UpdateUser'](arg1, arg2);
+export function UpdateUser(arg1) {
+  return window['go']['main']['App']['UpdateUser'](arg1);
 }

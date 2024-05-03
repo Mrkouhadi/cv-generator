@@ -30,9 +30,10 @@ i18next.init({
 import { Provider } from "react-redux";
 import Sidebar from "./components/Sidebar";
 import Setting from "./pages/Setting";
-import { store } from "./state/store";
+import store from "./state/store";
 import Dashboard from "./pages/Dashboard";
-import History from "./pages/History";
+import Templates from "./pages/Templates";
+import UserPage from "./pages/UserPage";
 // render everything
 const container = document.getElementById("root");
 ReactDOM.createRoot(container as HTMLElement).render(
@@ -46,7 +47,8 @@ ReactDOM.createRoot(container as HTMLElement).render(
               <Routes>
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/setting" element={<Setting />} />
-                <Route path="/history" element={<History />} />
+                <Route path="/templates" element={<Templates />} />
+                <Route path="/user/:id" element={<UserPage />} />
               </Routes>
             </div>
           </HashRouter>
