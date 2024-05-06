@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { AddExperience } from "../../../wailsjs/go/main/App";
 import { Experience as ExperienceType } from "../../utils/types";
-
-const Experience = () => {
+type ExpProps = {
+  ID: number;
+  TobeUpdated?: string;
+};
+const Experience: React.FC<ExpProps> = ({ ID, TobeUpdated }) => {
   const [field, setField] = useState("");
   const [company, setCompany] = useState("");
   const [jobTitle, setJobTitle] = useState("");
@@ -40,7 +43,7 @@ const Experience = () => {
     const isValid = Object.values(newErrors).every((error) => error === "");
     if (isValid) {
       let exp: ExperienceType = {
-        UserID: 6,
+        UserID: ID,
         Field: field,
         Company: company,
         StartDate: new Date(startDate),

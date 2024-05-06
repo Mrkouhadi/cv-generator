@@ -16,7 +16,7 @@ type props = {
   language: Language[];
 };
 // const Canadian1 = (props: props) => {
-const Canadian1 = () => {
+const Canadian1: React.FC = () => {
   return (
     // for A4: 595 x 842 points (1120 pixels for height X 791 pixels for width)
     <section className="text-start tracking-wide shadow-lg h-[1120px] w-[791px] p-6 bg-bg-light-1 text-font-light-1 rounded-lg">

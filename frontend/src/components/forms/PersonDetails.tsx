@@ -3,13 +3,17 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../state/store";
 import { addUser, updateUser } from "../../state/UserSlice";
 import { User } from "../../utils/types";
+import Toast from "../Taost";
+
 interface PersonDetailsProps {
   userTobeUpdated?: User;
 }
-const PersonDetails = ({ userTobeUpdated }: PersonDetailsProps) => {
+
+const PersonDetails: React.FC<PersonDetailsProps> = ({ userTobeUpdated }) => {
+  const [toast, setToats] = useState({ message: "", type: "" });
   const dispatch: AppDispatch = useDispatch();
 
-  const [imageSrc, setImageSrc] = useState<any>();
+  const [imageSrc, setImageSrc] = useState<any>("");
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [birthdate, setBirthdate] = useState("");
@@ -40,6 +44,7 @@ const PersonDetails = ({ userTobeUpdated }: PersonDetailsProps) => {
       reader.readAsDataURL(file);
     }
   };
+
   const handleSubmit = (event: any) => {
     event.preventDefault();
     // Perform validation
@@ -72,10 +77,17 @@ const PersonDetails = ({ userTobeUpdated }: PersonDetailsProps) => {
       if (userTobeUpdated) {
         u.ID = userTobeUpdated.ID;
         dispatch(updateUser(u));
+        setToats({
+          message: "User has been updated successfully",
+          type: "success",
+        });
       } else {
         dispatch(addUser(u));
+        setToats({
+          message: "User has been added successfully",
+          type: "success",
+        });
       }
-      console.log("Form submitted successfully"); // FIXME: a modal to show the success message
       setFullName("");
       setEmail("");
       setImageSrc("");
@@ -87,6 +99,11 @@ const PersonDetails = ({ userTobeUpdated }: PersonDetailsProps) => {
       setNationality("");
     } else {
       console.log("Form contains errors. Please fix them before submitting."); // FIXME: a modal to show the error
+      setToats({
+        message:
+          "Please fill in the necessary inputs before submitting the form",
+        type: "failure",
+      });
     }
   };
 
@@ -103,14 +120,14 @@ const PersonDetails = ({ userTobeUpdated }: PersonDetailsProps) => {
       setDescription(userTobeUpdated.Description);
       setNationality(userTobeUpdated.Nationality);
     }
-  }, [userTobeUpdated]);
+  }, []);
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="p-4 w-full flex flex-col items-center gap-6 bg-bg-light-2 dark:bg-bg-dark-2 dark:text-font-dark-1 text-font-light-1 rounded"
+      className="p-16 w-full flex flex-col items-center gap-6 bg-bg-light-2 dark:bg-bg-dark-2 dark:text-font-dark-1 text-font-light-1 rounded"
     >
-      <div className="flex flex-col items-start gap-2 w-4/5 relative ">
+      <div className="flex flex-col items-start gap-2 w-full relative ">
         <label className="" htmlFor="name">
           Full Name
         </label>
@@ -128,7 +145,7 @@ const PersonDetails = ({ userTobeUpdated }: PersonDetailsProps) => {
           </p>
         )}
       </div>
-      <div className="flex flex-col items-start gap-2 w-4/5 relative ">
+      <div className="flex flex-col items-start gap-2 w-full relative ">
         <label className="" htmlFor="email">
           Email
         </label>
@@ -147,7 +164,7 @@ const PersonDetails = ({ userTobeUpdated }: PersonDetailsProps) => {
           </p>
         )}
       </div>{" "}
-      <div className="flex flex-col items-start gap-2 w-4/5 relative">
+      <div className="flex flex-col items-start gap-2 w-full relative">
         <label className="" htmlFor="birthdate">
           Birthdate
         </label>
@@ -165,7 +182,7 @@ const PersonDetails = ({ userTobeUpdated }: PersonDetailsProps) => {
           </p>
         )}
       </div>{" "}
-      <div className="flex flex-col items-start gap-2 w-4/5 relative">
+      <div className="flex flex-col items-start gap-2 w-full relative">
         <label className="" htmlFor="tel">
           Telephone
         </label>
@@ -184,7 +201,7 @@ const PersonDetails = ({ userTobeUpdated }: PersonDetailsProps) => {
           </p>
         )}
       </div>
-      <div className="flex flex-col items-start gap-2 w-4/5 relative">
+      <div className="flex flex-col items-start gap-2 w-full relative">
         <label className="" htmlFor="address">
           Address
         </label>
@@ -203,7 +220,7 @@ const PersonDetails = ({ userTobeUpdated }: PersonDetailsProps) => {
           </p>
         )}
       </div>
-      <div className="flex flex-col items-start gap-2 w-4/5 relative">
+      <div className="flex flex-col items-start gap-2 w-full relative">
         <label className="" htmlFor="nationality">
           Nationality
         </label>
@@ -222,7 +239,7 @@ const PersonDetails = ({ userTobeUpdated }: PersonDetailsProps) => {
           </p>
         )}
       </div>
-      <div className="flex flex-col items-start gap-2 w-4/5 relative">
+      <div className="flex flex-col items-start gap-2 w-full relative">
         <label className="" htmlFor="jobtitle">
           Job Title
         </label>
@@ -241,7 +258,7 @@ const PersonDetails = ({ userTobeUpdated }: PersonDetailsProps) => {
           </p>
         )}
       </div>
-      <div className="flex flex-col items-start gap-2 w-4/5 relative">
+      <div className="flex flex-col items-start gap-2 w-full relative">
         <label className="" htmlFor="desc">
           Description
         </label>
@@ -260,12 +277,17 @@ const PersonDetails = ({ userTobeUpdated }: PersonDetailsProps) => {
           </p>
         )}
       </div>
-      <div className="relative flex justify-between w-4/5">
+      <div className="relative flex justify-between w-full">
         <input
           type="file"
           onChange={handleImageChange}
           className="absolute inset-0 opacity-0 cursor-pointer w-[130px]"
         />
+        {errors.image && (
+          <p className="text-red-500 text-sm absolute -bottom-6">
+            {errors.image}
+          </p>
+        )}
         {imageSrc ? ( // 170px x 130px
           <div className="flex ">
             <img
@@ -281,11 +303,16 @@ const PersonDetails = ({ userTobeUpdated }: PersonDetailsProps) => {
           </div>
         )}
       </div>
-      <button type="submit" className="p-2 bg-primary text-white rounded w-4/5">
+      <button
+        type="submit"
+        className="p-2 bg-primary text-white rounded w-full"
+      >
         {userTobeUpdated ? "Update user" : "Register User"}
       </button>
+      <Toast type={toast.type}>
+        <div className="p-4">{toast.message}</div>
+      </Toast>
     </form>
   );
 };
-
 export default PersonDetails;

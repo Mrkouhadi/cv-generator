@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"os"
 )
 
 // App struct
@@ -29,6 +30,18 @@ func (a *App) startup(ctx context.Context) {
 	}
 	a.Db = db
 	log.Println("successfully set up the db")
+
+	////////testing created a folder in the user's computer when first lunch the app
+	// // Check if the data directory exists
+	// _, err = os.Stat("./cvbuilder-data")
+	// if os.IsNotExist(err) {
+	// 	// Data directory doesn't exist, create it
+	// 	err := os.Mkdir("./cvbuilder-data", 0755) // 0755 sets directory permissions
+	// 	if err != nil {
+	// 		// Handle error if directory creation fails
+	// 		panic(err)
+	// 	}
+	// }
 }
 
 // Greet returns a greeting for the given name
@@ -65,4 +78,14 @@ func (a *App) SendPngFile(file string) {
 		return
 	}
 	_ = SavePngFile(a.ctx, "cv-builder", "cv-builder"+".png", "", "", requestData.ImageData)
+}
+
+// ///////////////////
+func (a *App) GetImage(filename string) []byte {
+	data, err := os.ReadFile("./data/images/" + filename)
+	if err != nil {
+		log.Println("Error reading file:", err)
+		return nil
+	}
+	return data
 }

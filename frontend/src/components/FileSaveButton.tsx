@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 
-const FileSaveButton = () => {
+const FileSaveButton: React.FC = () => {
   const inputRef = useRef<any>();
 
   const handleButtonClick = () => {

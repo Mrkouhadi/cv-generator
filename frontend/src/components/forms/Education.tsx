@@ -2,7 +2,11 @@ import { useState } from "react";
 import { AddEducation } from "../../../wailsjs/go/main/App";
 import { Education as EducationType } from "../../utils/types";
 
-const Education = () => {
+type EduProps = {
+  ID: number;
+  TobeUpdated?: string;
+};
+const Education: React.FC<EduProps> = ({ ID, TobeUpdated }) => {
   const [degree, setDegree] = useState("");
   const [major, setMajor] = useState("");
   const [university, setUniversity] = useState("");
@@ -36,7 +40,7 @@ const Education = () => {
     const isValid = Object.values(newErrors).every((error) => error === "");
     if (isValid) {
       let edu: EducationType = {
-        UserID: 6,
+        UserID: ID,
         Degree: degree,
         Major: major,
         University: university,
@@ -63,7 +67,7 @@ const Education = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="p-4 w-full flex flex-col items-center gap-6 bg-bg-light-2 dark:bg-bg-dark-2 dark:text-font-dark-1 text-font-light-1 rounded"
+      className="p-4 py-20 w-full flex flex-col items-center gap-6 bg-bg-light-2 dark:bg-bg-dark-2 dark:text-font-dark-1 text-font-light-1 rounded"
     >
       <div className="flex items-center justify-between w-4/5 gap-12">
         <div className="flex flex-col items-start gap-2 w-4/5 relative ">

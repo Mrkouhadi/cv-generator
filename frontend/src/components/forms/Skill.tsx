@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import { AddSkill, GetAllSkills } from "../../../wailsjs/go/main/App";
 import { Skill as SkillType } from "../../utils/types";
 
-const Skill = () => {
+type SkillsProps = {
+  ID: number;
+  TobeUpdated?: string;
+};
+const Skill: React.FC<SkillsProps> = ({ ID, TobeUpdated }) => {
   const [skillsList, setSkillsList] = useState<any[]>();
 
   const [title, setTitle] = useState("");
@@ -25,7 +29,7 @@ const Skill = () => {
     const isValid = Object.values(newErrors).every((error) => error === "");
     if (isValid) {
       let sk: SkillType = {
-        UserID: 6,
+        UserID: ID,
         Title: title,
         Proficiency: proficiency,
       };
