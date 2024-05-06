@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import { AddLanguage, GetAllLanguages } from "../../../wailsjs/go/main/App";
 import { Language as LanguageType } from "../../utils/types";
 
-const Language = () => {
+type LangProps = {
+  ID: number;
+  TobeUpdated?: string;
+};
+const Language: React.FC<LangProps> = ({ ID, TobeUpdated }) => {
   const [languagesList, setLanguagesList] = useState<any[]>();
   const [language, setLanguage] = useState("");
   const [proficiency, setProficiency] = useState("beginner");
@@ -24,7 +28,7 @@ const Language = () => {
     const isValid = Object.values(newErrors).every((error) => error === "");
     if (isValid) {
       let ln: LanguageType = {
-        UserID: 6,
+        UserID: ID,
         Language: language,
         Proficiency: proficiency,
       };

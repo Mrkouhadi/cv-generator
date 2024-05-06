@@ -40,7 +40,7 @@ ReactDOM.createRoot(container as HTMLElement).render(
   <React.StrictMode>
     <Provider store={store}>
       <I18nextProvider i18n={i18next}>
-        <main className=" min-h-screen max-h-screen flex overflow-hidden">
+        <main className=" min-h-screen max-h-screen flex overflow-hidden ">
           <HashRouter basename="/">
             <Sidebar />
             <div className="overflow-y-auto h-screen w-full bg-bg-light-2 dark:bg-bg-dark-1 text-font-light-2 dark:text-font-dark-1 ">

@@ -90,6 +90,10 @@ export function GetExperienceByID(arg1) {
   return window['go']['main']['App']['GetExperienceByID'](arg1);
 }
 
+export function GetImage(arg1) {
+  return window['go']['main']['App']['GetImage'](arg1);
+}
+
 export function GetLanguageByID(arg1) {
   return window['go']['main']['App']['GetLanguageByID'](arg1);
 }

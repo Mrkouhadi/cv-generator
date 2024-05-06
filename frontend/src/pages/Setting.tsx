@@ -4,7 +4,7 @@ import html2canvas from "html2canvas";
 import { SendPdfFile, SendPngFile } from "../../wailsjs/go/main/App";
 import Canadian1 from "../components/templates/Canadian1";
 
-const Setting = () => {
+const Setting: React.FC = () => {
   const pdfRef = useRef(null);
 
   const createPDF = async () => {
@@ -69,14 +69,14 @@ const Setting = () => {
           type="button"
           className="p-4 bg-primary text-white mt-4"
         >
-          DOWNLOAD MY CV as PDF
+          EXPORT as PDF
         </button>
         <button
           onClick={createPNG}
           type="button"
           className="p-4 bg-primary text-white mt-4"
         >
-          DOWNLOAD MY CV as PNG
+          EXPORT as PNG
         </button>
       </div>
     </div>

@@ -5,7 +5,7 @@ import DarkMode from "./DarkMode";
 import LanguageToggler from "./LanguageToggler";
 import logo from "../assets/images/appicon.png";
 
-const Sidebar = () => {
+const Sidebar: React.FC = () => {
   const [t, i18n] = useTranslation("global");
 
   useEffect(() => {

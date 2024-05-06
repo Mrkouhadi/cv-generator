@@ -14,3 +14,8 @@ body {
     "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
 }
+
+/* hide scrol bar in a */
+::-webkit-scrollbar {
+  width: 0px;
+}

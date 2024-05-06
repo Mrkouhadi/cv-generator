@@ -46,6 +46,8 @@ export function GetEducationByID(arg1:number):Promise<main.Education>;
 
 export function GetExperienceByID(arg1:number):Promise<main.Experience>;
 
+export function GetImage(arg1:string):Promise<Array<number>>;
+
 export function GetLanguageByID(arg1:number):Promise<main.Language>;
 
 export function GetSkillByID(arg1:number):Promise<main.Skill>;
