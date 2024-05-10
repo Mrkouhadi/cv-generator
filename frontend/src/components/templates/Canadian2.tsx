@@ -1,11 +1,12 @@
 // for A4: 595 x 842 points (1120 pixels for height X 791 pixels for width)
 import React, { useEffect } from "react";
 
-const Canadian1: React.FC<any> = ({ data }: any) => {
+const Canadian2: React.FC<any> = ({ data }: any) => {
   if (data == null) return <h1>Loading..</h1>;
   return (
     // for A4: 595 x 842 points (1120 pixels for height X 791 pixels for width)
-    <section className="text-start tracking-wide shadow-lg h-[1120px] w-[791px] p-6 bg-bg-light-1 text-font-light-1 rounded-lg">
+    // FIXME: remove bg-primary.
+    <section className="text-start tracking-wide shadow-lg h-[1120px] w-[791px] p-6 bg-bg-light-1 text-font-light-1 bg-primary rounded-lg">
       <div className="text-4xl tracking-widest py-4 text-start border border-0 border-b-2 border-gray-300">
         <span className="font-bold text-4xl">{data?.user.Name}</span>
         <p className="text-xl mt-4">{data?.user.JobTitle}</p>
@@ -143,4 +144,4 @@ const Canadian1: React.FC<any> = ({ data }: any) => {
     </section>
   );
 };
-export default Canadian1;
+export default Canadian2;
