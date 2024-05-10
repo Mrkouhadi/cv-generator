@@ -32,6 +32,16 @@ const Sidebar: React.FC = () => {
         >
           {t("sidebar.dashboard")}
         </NavLink>
+        <NavLink
+          to="/templates"
+          className={({ isActive }) =>
+            isActive
+              ? " w-full text-start text-primary"
+              : " w-full text-start text-font-light-1 dark:text-font-dark-1 hover:text-primary hover:dark:text-primary"
+          }
+        >
+          {t("sidebar.templates")}
+        </NavLink>
 
         <NavLink
           to="/setting"
@@ -42,16 +52,6 @@ const Sidebar: React.FC = () => {
           }
         >
           {t("sidebar.setting")}
-        </NavLink>
-        <NavLink
-          to="/templates"
-          className={({ isActive }) =>
-            isActive
-              ? " w-full text-start text-primary"
-              : " w-full text-start text-font-light-1 dark:text-font-dark-1 hover:text-primary hover:dark:text-primary"
-          }
-        >
-          {t("sidebar.templates")}
         </NavLink>
       </nav>
       <LanguageToggler />

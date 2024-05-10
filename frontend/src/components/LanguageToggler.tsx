@@ -33,8 +33,8 @@ const LanguageToggler: React.FC = () => {
       </div>
 
       <div
-        className={`min-w-24 bg-primary flex flex-col gap-2 absolute p-4 -bottom-72 left-36 transition-transform ${
-          open ? "bottom-0 translate-y-0" : "translate-y-full"
+        className={` z-50 min-w-24 bg-primary flex flex-col gap-2 absolute p-4 -bottom-72 left-36 transition-transform ${
+          open ? "bottom-0 translate-y-0 " : "translate-y-full "
         }`}
       >
         <button
