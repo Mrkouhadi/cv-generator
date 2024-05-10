@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllUsers, deleteUser, selectAllUsers } from "../state/UserSlice";
+import { fetchAllUsers, selectAllUsers } from "../state/UserSlice";
 import { RootState, AppDispatch } from "../state/store"; // Import RootState if you have it defined in your Redux store
 
-import UserCard from "./UserCard";
+import UserCard from "./cards/UserCard";
 import PersonDetails from "./forms/PersonDetails";
 import Modal from "./Modal";
 
@@ -30,7 +30,7 @@ const Users: React.FC = () => {
         </button>
       </div>
       <div className="grid grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-2">
-        {users && users.map((user) => <UserCard user={user} />)}
+        {users && users.map((user) => <UserCard key={user.ID} user={user} />)}
       </div>
       <Modal show={showModal} onClose={handleClose}>
         <PersonDetails />

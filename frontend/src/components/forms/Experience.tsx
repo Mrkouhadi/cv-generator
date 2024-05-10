@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { AddExperience } from "../../../wailsjs/go/main/App";
 import { Experience as ExperienceType } from "../../utils/types";
 type ExpProps = {
-  ID: number;
+  ID?: number;
   TobeUpdated?: string;
 };
-const Experience: React.FC<ExpProps> = ({ ID, TobeUpdated }) => {
+const Experience: React.FC<ExpProps> = ({ ID = 0, TobeUpdated }) => {
   const [field, setField] = useState("");
   const [company, setCompany] = useState("");
   const [jobTitle, setJobTitle] = useState("");

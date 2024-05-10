@@ -3,10 +3,10 @@ import { AddEducation } from "../../../wailsjs/go/main/App";
 import { Education as EducationType } from "../../utils/types";
 
 type EduProps = {
-  ID: number;
+  ID?: number;
   TobeUpdated?: string;
 };
-const Education: React.FC<EduProps> = ({ ID, TobeUpdated }) => {
+const Education: React.FC<EduProps> = ({ ID = 0, TobeUpdated }) => {
   const [degree, setDegree] = useState("");
   const [major, setMajor] = useState("");
   const [university, setUniversity] = useState("");

@@ -34,6 +34,7 @@ import store from "./state/store";
 import Dashboard from "./pages/Dashboard";
 import Templates from "./pages/Templates";
 import UserPage from "./pages/UserPage";
+import GenerateTemplates from "./pages/GenerateTemplates";
 // render everything
 const container = document.getElementById("root");
 ReactDOM.createRoot(container as HTMLElement).render(
@@ -49,6 +50,10 @@ ReactDOM.createRoot(container as HTMLElement).render(
                 <Route path="/setting" element={<Setting />} />
                 <Route path="/templates" element={<Templates />} />
                 <Route path="/user/:id" element={<UserPage />} />
+                <Route
+                  path="/generate-templates"
+                  element={<GenerateTemplates />}
+                />
               </Routes>
             </div>
           </HashRouter>
