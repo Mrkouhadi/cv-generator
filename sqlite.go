@@ -234,7 +234,13 @@ func (app *App) UpdateUser(data string) error {
 	return nil
 }
 
-func (app *App) UpdateEducation(education Education) error {
+func (app *App) UpdateEducation(data string) error {
+	var education Education
+	err := json.Unmarshal([]byte(data), &education)
+	if err != nil {
+		fmt.Println("Error unmarshalling JSON:", err)
+		return nil
+	}
 	stmt, err := app.Db.Prepare(`UPDATE education 
 		SET degree=?, major=?, university=?, country=?, city=?, start_date=?, end_date=?
 		WHERE id=?`)
@@ -251,7 +257,13 @@ func (app *App) UpdateEducation(education Education) error {
 	return nil
 }
 
-func (app *App) UpdateExperience(experience Experience) error {
+func (app *App) UpdateExperience(data string) error {
+	var experience Experience
+	err := json.Unmarshal([]byte(data), &experience)
+	if err != nil {
+		fmt.Println("Error unmarshalling JSON:", err)
+		return nil
+	}
 	stmt, err := app.Db.Prepare(`UPDATE experience 
 		SET field=?, job_title=?, company=?, country=?, city=?, description=?, start_date=?, end_date=?
 		WHERE id=?`)
@@ -268,7 +280,13 @@ func (app *App) UpdateExperience(experience Experience) error {
 	return nil
 }
 
-func (app *App) UpdateSkill(skill Skill) error {
+func (app *App) UpdateSkill(data string) error {
+	var skill Skill
+	err := json.Unmarshal([]byte(data), &skill)
+	if err != nil {
+		fmt.Println("Error unmarshalling JSON:", err)
+		return nil
+	}
 	stmt, err := app.Db.Prepare(`UPDATE skill 
 		SET title=?, proficiency=?
 		WHERE id=?`)
@@ -283,7 +301,13 @@ func (app *App) UpdateSkill(skill Skill) error {
 	return nil
 }
 
-func (app *App) UpdateLanguage(language Language) error {
+func (app *App) UpdateLanguage(data string) error {
+	var language Language
+	err := json.Unmarshal([]byte(data), &language)
+	if err != nil {
+		fmt.Println("Error unmarshalling JSON:", err)
+		return nil
+	}
 	stmt, err := app.Db.Prepare(`UPDATE language 
 		SET language=?, proficiency=?
 		WHERE id=?`)
@@ -491,6 +515,11 @@ func (app *App) DeleteUserByID(userID int, filename string) error {
 	if err != nil {
 		log.Println("user deleted but the profile photo could not be removed. Please do it manually by going to ./data/images directory")
 	}
+	// remove all his/her data(education,experience,skills,languages)
+	err = app.DeleteAllRowsByUserID(userID)
+	if err != nil {
+		log.Println("could not delete data of the deleted user!")
+	}
 	return nil
 }
 func (app *App) DeleteEducationByID(educationID int) error {
@@ -512,6 +541,7 @@ func (app *App) DeleteSkillByID(skillID int) error {
 	if err != nil {
 		return err
 	}
+	log.Printf("skill %d has been deleted", skillID)
 	return nil
 }
 func (app *App) DeleteLanguageByID(languageID int) error {
@@ -532,29 +562,31 @@ func (app *App) DeleteAllUsers() error {
 	}
 	return nil
 }
-func (app *App) DeleteAllEducation() error {
-	_, err := app.Db.Exec("DELETE FROM education")
+
+// delete all data of a user;
+func (app *App) DeleteAllRowsByUserID(userID int) error {
+	// Start a transaction
+	tx, err := app.Db.Begin()
 	if err != nil {
 		return err
 	}
-	return nil
-}
-func (app *App) DeleteAllExperience() error {
-	_, err := app.Db.Exec("DELETE FROM experience")
-	if err != nil {
-		return err
-	}
-	return nil
-}
-func (app *App) DeleteAllSkill() error {
-	_, err := app.Db.Exec("DELETE FROM skill")
-	if err != nil {
-		return err
-	}
-	return nil
-}
-func (app *App) DeleteAllLanguage() error {
-	_, err := app.Db.Exec("DELETE FROM language")
+	defer func() {
+		if err != nil {
+			// Rollback the transaction if an error occurred
+			tx.Rollback()
+			return
+		}
+		// Commit the transaction if no error occurred
+		err = tx.Commit()
+	}()
+
+	// Execute the combined DELETE query
+	_, err = tx.Exec(`
+        DELETE FROM education WHERE user_id = ?;
+        DELETE FROM experience WHERE user_id = ?;
+        DELETE FROM skill WHERE user_id = ?;
+        DELETE FROM language WHERE user_id = ?;
+    `, userID, userID, userID, userID)
 	if err != nil {
 		return err
 	}
