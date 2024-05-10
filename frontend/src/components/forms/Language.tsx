@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { AddLanguage, GetAllLanguages } from "../../../wailsjs/go/main/App";
+import { useDispatch } from "react-redux";
+import { addLanguage, updateLanguage } from "../../state/LanguageSlice";
+import { AppDispatch } from "../../state/store";
 import { Language as LanguageType } from "../../utils/types";
 
 type LangProps = {
-  ID: number;
-  TobeUpdated?: string;
+  ID?: number;
+  TobeUpdated?: LanguageType;
 };
-const Language: React.FC<LangProps> = ({ ID, TobeUpdated }) => {
-  const [languagesList, setLanguagesList] = useState<any[]>();
+const Language: React.FC<LangProps> = ({ ID = 0, TobeUpdated }) => {
+  const dispatch: AppDispatch = useDispatch();
   const [language, setLanguage] = useState("");
   const [proficiency, setProficiency] = useState("beginner");
 
@@ -32,36 +34,27 @@ const Language: React.FC<LangProps> = ({ ID, TobeUpdated }) => {
         Language: language,
         Proficiency: proficiency,
       };
-      AddLanguage(JSON.stringify(ln)).then((d) => {
-        console.log(d);
-      });
-
-      console.log("Form submitted successfully"); // FIXME: a modal to show the success message
-      setLanguage("");
-      setProficiency("beginner");
+      if (TobeUpdated) {
+        ln.ID = TobeUpdated.ID;
+        dispatch(updateLanguage(ln));
+      } else {
+        dispatch(addLanguage(ln));
+        setLanguage("");
+        setProficiency("beginner");
+      }
     } else {
       console.log("Form contains errors. Please fix them before submitting."); // FIXME: a modal to show the error
     }
   };
+
   useEffect(() => {
-    GetAllLanguages(6).then((d) => {
-      console.log(d);
-      setLanguagesList(d);
-    });
-  });
+    if (TobeUpdated) {
+      setLanguage(TobeUpdated?.Language);
+      setProficiency(TobeUpdated?.Proficiency);
+    }
+  }, []);
   return (
     <>
-      <div className="flex flex-col gap-2 ">
-        {languagesList &&
-          languagesList.map((l: any) => {
-            return (
-              <div className="" key={l.ID}>
-                <p className="">{l.Language}</p>
-                <p className="">{l.Proficiency}</p>
-              </div>
-            );
-          })}
-      </div>
       <form
         onSubmit={handleSubmit}
         className="p-4 gap-4 px-24 flex justify-center bg-bg-light-2 dark:bg-bg-dark-2 dark:text-font-dark-1 text-font-light-1 rounded"

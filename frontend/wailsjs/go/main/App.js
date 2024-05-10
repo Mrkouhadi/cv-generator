@@ -22,20 +22,8 @@ export function AddUser(arg1) {
   return window['go']['main']['App']['AddUser'](arg1);
 }
 
-export function DeleteAllEducation() {
-  return window['go']['main']['App']['DeleteAllEducation']();
-}
-
-export function DeleteAllExperience() {
-  return window['go']['main']['App']['DeleteAllExperience']();
-}
-
-export function DeleteAllLanguage() {
-  return window['go']['main']['App']['DeleteAllLanguage']();
-}
-
-export function DeleteAllSkill() {
-  return window['go']['main']['App']['DeleteAllSkill']();
+export function DeleteAllRowsByUserID(arg1) {
+  return window['go']['main']['App']['DeleteAllRowsByUserID'](arg1);
 }
 
 export function DeleteAllUsers() {

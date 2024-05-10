@@ -1,12 +1,11 @@
 import { useState } from "react";
-import { User } from "../utils/types";
-import PersonDetails from "./forms/PersonDetails";
-import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { User } from "../../utils/types";
+import PersonDetails from "../forms/PersonDetails";
 import { Link } from "react-router-dom";
-import { deleteUser } from "../state/UserSlice";
-import { AppDispatch } from "../state/store"; // Import RootState if you have it defined in your Redux store
+import { deleteUser } from "../../state/UserSlice";
+import { AppDispatch } from "../../state/store"; // Import RootState if you have it defined in your Redux store
 import { useDispatch } from "react-redux";
-import Modal from "./Modal";
+import Modal from "../Modal";
 
 type UserCardProps = {
   user: User;
@@ -26,9 +25,13 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
   return (
     <div
       key={user.ID}
-      className="min-h-44 bg-bg-light-1 dark:bg-bg-dark-2 shadow hover:shadow-xl flex flex-col justify-between rounded overflow-hidden"
+      className="bg-bg-light-1 dark:bg-bg-dark-2 shadow hover:shadow-xl flex flex-col justify-between rounded overflow-hidden"
     >
-      <div key={user.ID} className=" p-2 text-start flex flex-col gap-2">
+      <Link
+        key={user.ID}
+        className=" p-2 text-start flex flex-col gap-2"
+        to={`/user/${user.ID}`}
+      >
         <h1 className="">
           Name:{" "}
           <span className="font-bold">
@@ -65,20 +68,19 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
               : user.Email}
           </span>{" "}
         </h1>
-      </div>
-
-      <div className="flex items-center justify-between bg-white p-2">
-        <Link
-          to={`/user/${user.ID}`}
-          className="bg-primary text-white py-2 px-4 rounded"
+      </Link>
+      <div className="flex items-center justify-between  p-2">
+        <button
+          className="bg-red-500 text-white p-2 rounded"
+          onClick={() => handleDeleteUser(user.ID!, user.Photo)}
         >
-          View
-        </Link>
-        <button onClick={handleOpen}>
-          <PencilSquareIcon className="w-6 h-6 text-green-800" />
+          Delete
         </button>
-        <button onClick={() => handleDeleteUser(user.ID!, user.Photo)}>
-          <TrashIcon className="w-6 h-6 text-red-600" />
+        <button
+          className="bg-green-700 text-white p-2 px-4 rounded"
+          onClick={handleOpen}
+        >
+          Edit
         </button>
       </div>
       <Modal show={showModal} onClose={handleClose}>

@@ -12,13 +12,7 @@ export function AddSkill(arg1:string):Promise<void>;
 
 export function AddUser(arg1:string):Promise<void>;
 
-export function DeleteAllEducation():Promise<void>;
-
-export function DeleteAllExperience():Promise<void>;
-
-export function DeleteAllLanguage():Promise<void>;
-
-export function DeleteAllSkill():Promise<void>;
+export function DeleteAllRowsByUserID(arg1:number):Promise<void>;
 
 export function DeleteAllUsers():Promise<void>;
 
@@ -60,12 +54,12 @@ export function SendPdfFile(arg1:string,arg2:string):Promise<void>;
 
 export function SendPngFile(arg1:string):Promise<void>;
 
-export function UpdateEducation(arg1:main.Education):Promise<void>;
+export function UpdateEducation(arg1:string):Promise<void>;
 
-export function UpdateExperience(arg1:main.Experience):Promise<void>;
+export function UpdateExperience(arg1:string):Promise<void>;
 
-export function UpdateLanguage(arg1:main.Language):Promise<void>;
+export function UpdateLanguage(arg1:string):Promise<void>;
 
-export function UpdateSkill(arg1:main.Skill):Promise<void>;
+export function UpdateSkill(arg1:string):Promise<void>;
 
 export function UpdateUser(arg1:string):Promise<void>;

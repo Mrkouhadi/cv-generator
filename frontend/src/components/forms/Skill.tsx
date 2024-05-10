@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
-import { AddSkill, GetAllSkills } from "../../../wailsjs/go/main/App";
+import { useDispatch } from "react-redux";
+import { addSkill, updateSkill, fetchAllSkills } from "../../state/SkillSlice";
+import { AppDispatch } from "../../state/store";
 import { Skill as SkillType } from "../../utils/types";
 
 type SkillsProps = {
-  ID: number;
-  TobeUpdated?: string;
+  ID?: number;
+  TobeUpdated?: SkillType;
 };
-const Skill: React.FC<SkillsProps> = ({ ID, TobeUpdated }) => {
+const Skill: React.FC<SkillsProps> = ({ ID = 0, TobeUpdated }) => {
   const [skillsList, setSkillsList] = useState<any[]>();
+  const dispatch: AppDispatch = useDispatch();
 
   const [title, setTitle] = useState("");
   const [proficiency, setProficiency] = useState("beginner");
@@ -33,22 +36,27 @@ const Skill: React.FC<SkillsProps> = ({ ID, TobeUpdated }) => {
         Title: title,
         Proficiency: proficiency,
       };
-      AddSkill(JSON.stringify(sk)).then((d) => {
-        console.log(d);
-      });
-      console.log("Form submitted successfully"); // FIXME: a modal to show the success message
-      setProficiency("beginner");
-      setTitle("");
+      if (TobeUpdated) {
+        sk.ID = TobeUpdated.ID;
+        dispatch(updateSkill(sk));
+        setProficiency("beginner");
+      } else {
+        dispatch(addSkill(sk));
+        console.log("Form submitted successfully"); // FIXME: a modal to show the success message
+        setProficiency("beginner");
+        setTitle("");
+      }
     } else {
       console.log("Form contains errors. Please fix them before submitting."); // FIXME: a modal to show the error
     }
   };
+  // for update: if this form has received data to be updated we will populate the inputs first
   useEffect(() => {
-    GetAllSkills(6).then((d) => {
-      console.log(d);
-      setSkillsList(d);
-    });
-  });
+    if (TobeUpdated) {
+      setTitle(TobeUpdated.Title);
+      setProficiency(TobeUpdated.Proficiency);
+    }
+  }, []);
   return (
     <>
       <div className="flex flex-col gap-2 ">
