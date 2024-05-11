@@ -1,11 +1,21 @@
-import React from "react";
-import { Education } from "../../utils/types";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { deleteEducation } from "../../state/EducationSlice";
+import { AppDispatch } from "../../state/store";
+import { Education as eduType } from "../../utils/types";
+import Education from "../forms/Education";
+import Modal from "../Modal";
 
 type ProspType = {
-  education: Education;
+  education: eduType;
 };
 const EducationCard: React.FC<ProspType> = ({ education }) => {
-  console.log(education);
+  const dispatch: AppDispatch = useDispatch();
+  // Modal
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const handleOpen = () => setShowModal(true);
+  const handleClose = () => setShowModal(false);
+
   return (
     <div className="bg-bg-light-1 dark:bg-bg-dark-2 p-2 flex flex-col gap-2 shadow hover:shadow-lg">
       <div className="flex items-center justify-between">
@@ -18,7 +28,6 @@ const EducationCard: React.FC<ProspType> = ({ education }) => {
           {education.Major}
         </p>
       </div>
-
       <p className="">
         <span className="font-bold">University:</span>
         {education.University}
@@ -56,11 +65,22 @@ const EducationCard: React.FC<ProspType> = ({ education }) => {
         </p>
       </div>
       <div className="flex items-center justify-between">
-        <button className="bg-red-500 text-white p-2 rounded">Delete</button>
-        <button className="bg-green-600 text-white p-2 px-4 rounded">
+        <button
+          onClick={() => dispatch(deleteEducation(education.ID!))}
+          className="bg-red-500 text-white p-2 rounded"
+        >
+          Delete
+        </button>
+        <button
+          onClick={handleOpen}
+          className="bg-green-600 text-white p-2 px-4 rounded"
+        >
           Edit
         </button>
       </div>
+      <Modal show={showModal} onClose={handleClose}>
+        <Education ID={education.UserID} TobeUpdated={education} />
+      </Modal>
     </div>
   );
 };

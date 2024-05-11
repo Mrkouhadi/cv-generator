@@ -69,24 +69,13 @@ const UserPage: React.FC = () => {
       >
         <ArrowUturnLeftIcon className="w-6 h-6 text-white" />
       </button>
-      {(() => {
-        if (
-          educations?.length >= 0 &&
-          experiences?.length >= 0 &&
-          languages?.length >= 0 &&
-          skills?.length >= 0
-        ) {
-          return (
-            <Link
-              to={"/generate-templates"}
-              state={{ user, educations, experiences, skills, languages }}
-              className="absolute right-4 text-white top-4  bg-red-400 p-2 rounded"
-            >
-              Generate a template
-            </Link>
-          );
-        }
-      })()}
+      <Link
+        to={"/generate-templates"}
+        state={{ user, educations, experiences, skills, languages }}
+        className="absolute right-4 text-white top-4  bg-red-400 p-2 rounded"
+      >
+        Generate a template
+      </Link>
       <div className="py-">
         <p className="text-center font-extrabold text-3xl tracking-wide">
           {user && <>{user?.Name}</>}
