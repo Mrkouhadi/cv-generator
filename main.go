@@ -19,7 +19,7 @@ func main() {
 
 	// Create application with options
 	err := wails.Run(&options.App{
-		Title:            "cvbuilder",
+		Title:            "CV Generator",
 		Width:            1024,
 		Height:           768,
 		MinWidth:         1024,
@@ -46,7 +46,7 @@ func main() {
 			WebviewIsTransparent: true,
 			WindowIsTranslucent:  true,
 			About: &mac.AboutInfo{
-				Title:   "CV Builder",
+				Title:   "CV Generator",
 				Message: "Copyright © 2024 Mr.Kouhadi",
 				Icon:    icon,
 			},
@@ -55,5 +55,4 @@ func main() {
 	if err != nil {
 		println("Error:", err.Error())
 	}
-
 }

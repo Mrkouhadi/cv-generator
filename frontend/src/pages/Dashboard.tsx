@@ -1,5 +1,4 @@
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
 import Users from "../components/Users";
 
 const Dashboard: React.FC = () => {
