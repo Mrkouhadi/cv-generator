@@ -1,19 +1,41 @@
-# README
+# CV Generator Desktop Application
 
-## About
+Welcome to our CV Generator Desktop Application! This user-friendly tool empowers you to effortlessly create professional-looking resumes tailored to your unique skills and experiences. Simply input your personal details, education background, work experiences, skills, and languages, then select from a variety of CV templates to customize the look and feel of your resume. Once you're satisfied with your design, export your CV in either PDF or PNG format for easy sharing and printing.
 
-This is the official Wails React-TS template.
+## Features
 
-You can configure the project by editing `wails.json`. More information about the project settings can be found
-here: https://wails.io/docs/reference/project-config
+- **User-Friendly Interface**: Intuitive design makes it easy for users to navigate and input their information.
+- **Customizable Templates**: Choose from a selection of professionally designed CV templates to showcase your personality and style.
+- **Easy Data Input**: Input your personal details, education background, work experiences, skills, and languages seamlessly.
+- **Export Options**: Export your CV in either PDF or PNG format for versatile sharing and printing.
+- **Save and Edit**: Save your progress and come back to edit your CV at any time.
+- **Offline Access**: Enjoy the convenience of creating your CV without requiring an internet connection.
 
-## Live Development
+## Getting Started
 
-To run in live development mode, run `wails dev` in the project directory. This will run a Vite development
-server that will provide very fast hot reload of your frontend changes. If you want to develop in a browser
-and have access to your Go methods, there is also a dev server that runs on http://localhost:34115. Connect
-to this in your browser, and you can call your Go code from devtools.
+1. **Download and Install**: Download the CV Generator Desktop Application from our website and follow the installation instructions.
+2. **Create Your CV**: Launch the application and begin filling in your personal details, education background, work experiences, skills, and languages.
+3. **Choose a Template**: Browse through the available templates and select the one that best suits your style and preferences.
+4. **Customize**: Customize your chosen template by adjusting fonts, colors, and layout options to create a unique look for your CV.
+5. **Export**: Once you're satisfied with your CV, export it in your preferred format (PDF or PNG) for sharing and printing.
 
-## Building
+## System Requirements
 
-To build a redistributable, production mode package, use `wails build`.
+- Operating System: Windows 10, macOS, Linux
+- Processor: Intel Core i3 or equivalent
+- RAM: 4GB or higher
+- Disk Space: 200MB free space
+
+## Contributors
+
+This project is brought to you by the following contributors:
+
+- Mr.Kouhadi (@mrkouhadi)
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+Thank you for choosing our CV Generator Desktop Application. We hope it helps you land your dream job!
