@@ -30,18 +30,6 @@ func (a *App) startup(ctx context.Context) {
 	}
 	a.Db = db
 	log.Println("successfully set up the db")
-
-	////////testing created a folder in the user's computer when first lunch the app
-	// // Check if the data directory exists
-	// _, err = os.Stat("./cvbuilder-data")
-	// if os.IsNotExist(err) {
-	// 	// Data directory doesn't exist, create it
-	// 	err := os.Mkdir("./cvbuilder-data", 0755) // 0755 sets directory permissions
-	// 	if err != nil {
-	// 		// Handle error if directory creation fails
-	// 		panic(err)
-	// 	}
-	// }
 }
 
 // Greet returns a greeting for the given name
@@ -62,7 +50,7 @@ func (a *App) SendPdfFile(file, name string) {
 		fmt.Println("Error unmarshalling JSON:", err)
 		return
 	}
-	_ = SavePDFFile(a.ctx, name, "cv-builder-"+name+".pdf", "", "", requestData.PdfData)
+	_ = SavePDFFile(a.ctx, name, "cv-generator-"+name+".pdf", "", "", requestData.PdfData)
 }
 
 // ///////
@@ -77,7 +65,7 @@ func (a *App) SendPngFile(file string) {
 		fmt.Println("Error unmarshalling JSON:", err)
 		return
 	}
-	_ = SavePngFile(a.ctx, "cv-builder", "cv-builder"+".png", "", "", requestData.ImageData)
+	_ = SavePngFile(a.ctx, "cv-generator", "cv-generator"+".png", "", "", requestData.ImageData)
 }
 
 // ///////////////////
