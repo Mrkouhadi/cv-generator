@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { addSkill, updateSkill, fetchAllSkills } from "../../state/SkillSlice";
+import { addSkill, updateSkill } from "../../state/SkillSlice";
 import { AppDispatch } from "../../state/store";
 import { Skill as SkillType } from "../../utils/types";
 
@@ -9,7 +9,6 @@ type SkillsProps = {
   TobeUpdated?: SkillType;
 };
 const Skill: React.FC<SkillsProps> = ({ ID = 0, TobeUpdated }) => {
-  const [skillsList, setSkillsList] = useState<any[]>();
   const dispatch: AppDispatch = useDispatch();
 
   const [title, setTitle] = useState("");
@@ -58,69 +57,53 @@ const Skill: React.FC<SkillsProps> = ({ ID = 0, TobeUpdated }) => {
     }
   }, []);
   return (
-    <>
-      <div className="flex flex-col gap-2 ">
-        {skillsList &&
-          skillsList.map((sk: any) => {
-            return (
-              <div className="" key={sk.ID}>
-                <p className="">{sk.Title}</p>
-                <p className="">{sk.Proficiency}</p>
-              </div>
-            );
-          })}
+    <form
+      onSubmit={handleSubmit}
+      className="relative p-4 px-24 w-full flex items-center justify-center gap-4 bg-bg-light-2 dark:bg-bg-dark-2 dark:text-font-dark-1 text-font-light-1 rounded"
+    >
+      <div className="flex items-center gap-2 w-full relative  py-2">
+        <label className="" htmlFor="title">
+          Skill:
+        </label>
+        <input
+          type="text"
+          name="title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          id="title"
+          placeholder=""
+          className="p-2 rounded w-full bg-bg-light-1 dark:bg-bg-dark-1"
+        />
+        {errors.title && (
+          <p className="text-red-500 text-sm absolute -bottom-3 left-12">
+            {errors.title}
+          </p>
+        )}
       </div>
-      <form
-        onSubmit={handleSubmit}
-        className="relative p-4 px-24 w-full flex items-center justify-center gap-4 bg-bg-light-2 dark:bg-bg-dark-2 dark:text-font-dark-1 text-font-light-1 rounded"
-      >
-        <div className="flex items-center gap-2 w-full relative  py-2">
-          <label className="" htmlFor="title">
-            Skill:
-          </label>
-          <input
-            type="text"
-            name="title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            id="title"
-            placeholder=""
-            className="p-2 rounded w-full bg-bg-light-1 dark:bg-bg-dark-1"
-          />
-          {errors.title && (
-            <p className="text-red-500 text-sm absolute -bottom-3 left-12">
-              {errors.title}
-            </p>
-          )}
-        </div>
-        <div className="flex flex-col items-start gap-2 relative w-full">
-          <select
-            id="proficiency"
-            name="proficiency"
-            value={proficiency}
-            onChange={(e) => setProficiency(e.target.value)}
-            className="p-2 h-10 rounded w-full bg-bg-light-1 dark:bg-bg-dark-1"
-          >
-            <option value="">Select proficiency level</option>
-            <option value="beginner">Beginner</option>
-            <option value="elementary">Elementary</option>
-            <option value="proficient">Proficient</option>
-            <option value="advanced">Advanced</option>
-          </select>
-          {errors.proficiency && (
-            <p className="text-red-500 text-sm absolute -bottom-6">
-              {errors.proficiency}
-            </p>
-          )}
-        </div>
-        <button
-          type="submit"
-          className="bg-primary text-white rounded p-2 px-4"
+      <div className="flex flex-col items-start gap-2 relative w-full">
+        <select
+          id="proficiency"
+          name="proficiency"
+          value={proficiency}
+          onChange={(e) => setProficiency(e.target.value)}
+          className="p-2 h-10 rounded w-full bg-bg-light-1 dark:bg-bg-dark-1"
         >
-          +
-        </button>
-      </form>
-    </>
+          <option value="">Select proficiency level</option>
+          <option value="beginner">Beginner</option>
+          <option value="elementary">Elementary</option>
+          <option value="proficient">Proficient</option>
+          <option value="advanced">Advanced</option>
+        </select>
+        {errors.proficiency && (
+          <p className="text-red-500 text-sm absolute -bottom-6">
+            {errors.proficiency}
+          </p>
+        )}
+      </div>
+      <button type="submit" className="bg-primary text-white rounded p-2 px-4">
+        {TobeUpdated ? "Update" : "Add"}
+      </button>
+    </form>
   );
 };
 export default Skill;

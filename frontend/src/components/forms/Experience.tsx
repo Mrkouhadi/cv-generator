@@ -1,11 +1,15 @@
-import React, { useState } from "react";
-import { AddExperience } from "../../../wailsjs/go/main/App";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { addExperience, updateExperience } from "../../state/ExperienceSlice";
+import { AppDispatch } from "../../state/store";
 import { Experience as ExperienceType } from "../../utils/types";
 type ExpProps = {
   ID?: number;
-  TobeUpdated?: string;
+  TobeUpdated?: ExperienceType;
 };
 const Experience: React.FC<ExpProps> = ({ ID = 0, TobeUpdated }) => {
+  const dispatch: AppDispatch = useDispatch();
+
   const [field, setField] = useState("");
   const [company, setCompany] = useState("");
   const [jobTitle, setJobTitle] = useState("");
@@ -53,9 +57,12 @@ const Experience: React.FC<ExpProps> = ({ ID = 0, TobeUpdated }) => {
         JobTitle: jobTitle,
         Description: desc,
       };
-      AddExperience(JSON.stringify(exp)).then((d) => {
-        console.log(d);
-      });
+      if (TobeUpdated) {
+        exp.ID = TobeUpdated.ID;
+        dispatch(updateExperience(exp));
+      } else {
+        dispatch(addExperience(exp));
+      }
       console.log("Form submitted successfully"); // FIXME: a modal to show the success message
       setField("");
       setCompany("");
@@ -69,6 +76,17 @@ const Experience: React.FC<ExpProps> = ({ ID = 0, TobeUpdated }) => {
       console.log("Form contains errors. Please fix them before submitting."); // FIXME: a modal to show the error
     }
   };
+  // for update: if this form has received data to be updated we will populate the inputs first
+  useEffect(() => {
+    if (TobeUpdated) {
+      setField(TobeUpdated.Field);
+      setCompany(TobeUpdated.Company);
+      setJobTitle(TobeUpdated.JobTitle);
+      setDesc(TobeUpdated.Description);
+      setCountry(TobeUpdated.Country);
+      setCity(TobeUpdated.City);
+    }
+  }, []);
   return (
     <form
       onSubmit={handleSubmit}
@@ -233,7 +251,7 @@ const Experience: React.FC<ExpProps> = ({ ID = 0, TobeUpdated }) => {
         )}
       </div>
       <button type="submit" className="p-2 bg-primary text-white rounded w-4/5">
-        Add Experience
+        {TobeUpdated ? "Update Experience" : "Add Experience"}
       </button>
     </form>
   );

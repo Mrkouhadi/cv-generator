@@ -1,12 +1,16 @@
-import { useState } from "react";
-import { AddEducation } from "../../../wailsjs/go/main/App";
+import { useEffect, useState } from "react";
 import { Education as EducationType } from "../../utils/types";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../state/store";
+import { addEducation, updateEducation } from "../../state/EducationSlice";
 
 type EduProps = {
   ID?: number;
-  TobeUpdated?: string;
+  TobeUpdated?: EducationType;
 };
 const Education: React.FC<EduProps> = ({ ID = 0, TobeUpdated }) => {
+  const dispatch: AppDispatch = useDispatch();
+
   const [degree, setDegree] = useState("");
   const [major, setMajor] = useState("");
   const [university, setUniversity] = useState("");
@@ -49,9 +53,13 @@ const Education: React.FC<EduProps> = ({ ID = 0, TobeUpdated }) => {
         Country: country,
         City: city,
       };
-      AddEducation(JSON.stringify(edu)).then((d) => {
-        console.log(d);
-      });
+      if (TobeUpdated) {
+        edu.ID = TobeUpdated.ID;
+        dispatch(updateEducation(edu));
+      } else {
+        dispatch(addEducation(edu));
+      }
+
       console.log("Form submitted successfully"); // FIXME: a modal to show the success message
       setDegree("");
       setMajor("");
@@ -64,6 +72,17 @@ const Education: React.FC<EduProps> = ({ ID = 0, TobeUpdated }) => {
       console.log("Form contains errors. Please fix them before submitting."); // FIXME: a modal to show the error
     }
   };
+
+  // for update: if this form has received data to be updated we will populate the inputs first
+  useEffect(() => {
+    if (TobeUpdated) {
+      setMajor(TobeUpdated.Major);
+      setUniversity(TobeUpdated.University);
+      setDegree(TobeUpdated.Degree);
+      setCountry(TobeUpdated.Country);
+      setCity(TobeUpdated.City);
+    }
+  }, []);
   return (
     <form
       onSubmit={handleSubmit}
@@ -211,7 +230,7 @@ const Education: React.FC<EduProps> = ({ ID = 0, TobeUpdated }) => {
         </div>
       </div>
       <button type="submit" className="p-2 bg-primary text-white rounded w-4/5">
-        Add Degree
+        {TobeUpdated ? "Update Education" : "Add Education"}
       </button>
     </form>
   );

@@ -1,9 +1,19 @@
-import React from "react";
-import { Experience } from "../../utils/types";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { deleteExperience } from "../../state/ExperienceSlice";
+import { AppDispatch } from "../../state/store";
+import { Experience as expType } from "../../utils/types";
+import Experience from "../forms/Experience";
+import Modal from "../Modal";
 type ProspType = {
-  experience: Experience;
+  experience: expType;
 };
 const ExperienceCard: React.FC<ProspType> = ({ experience }) => {
+  const dispatch: AppDispatch = useDispatch();
+  // Modal
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const handleOpen = () => setShowModal(true);
+  const handleClose = () => setShowModal(false);
   return (
     <div className="bg-bg-light-1 dark:bg-bg-dark-2 p-2 flex min-h-44 flex-col justify-between gap-2 shadow hover:shadow-lg">
       <div className="flex items-center justify-between">
@@ -60,11 +70,22 @@ const ExperienceCard: React.FC<ProspType> = ({ experience }) => {
       </p>
 
       <div className="flex items-center justify-between">
-        <button className="bg-red-500 text-white p-2 rounded">Delete</button>
-        <button className="bg-green-600 text-white p-2 px-4 rounded">
+        <button
+          onClick={() => dispatch(deleteExperience(experience.ID!))}
+          className="bg-red-500 text-white p-2 rounded"
+        >
+          Delete
+        </button>
+        <button
+          onClick={handleOpen}
+          className="bg-green-600 text-white p-2 px-4 rounded"
+        >
           Edit
         </button>
       </div>
+      <Modal show={showModal} onClose={handleClose}>
+        <Experience ID={experience.UserID} TobeUpdated={experience} />
+      </Modal>
     </div>
   );
 };
