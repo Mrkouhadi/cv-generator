@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -91,7 +92,8 @@ func (app *App) AddUser(data string) error {
 		return nil
 	}
 	// saving the image file and getting back the path to store it in the database
-	imgPath, err := SaveImage(user.Photo, user.Name+user.JobTitle)
+	fn := strings.ReplaceAll(user.Name+user.JobTitle, " ", "")
+	imgPath, err := SaveImage(user.Photo, fn)
 	if err != nil {
 		fmt.Println(err)
 		return err
