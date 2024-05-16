@@ -11,7 +11,7 @@ import (
 	"github.com/wailsapp/wails/v2/pkg/runtime"
 )
 
-// save an image file to "./data/images"
+// when registering a new user, SaveImage saves the new user's photo "./data/images" directory
 func SaveImage(data string, filename string) (string, error) {
 	// Remove data:image/png;base64, from the data
 	b64data := data[strings.IndexByte(data, ',')+1:]
@@ -64,7 +64,7 @@ func SaveImage(data string, filename string) (string, error) {
 	return filePath, nil
 }
 
-// save a pdf file
+// after generating the cv, SavePDFFile saves it as a PDF file.
 func SavePDFFile(ctx context.Context, title string, defaultFilename string, _ string, _ string, base64Content string) string {
 
 	file, err := runtime.SaveFileDialog(ctx, runtime.SaveDialogOptions{
@@ -101,6 +101,7 @@ func SavePDFFile(ctx context.Context, title string, defaultFilename string, _ st
 	return file // returns complete path of the saved file
 }
 
+// after generating the cv, SavePngFile saves it as a PNG file.
 func SavePngFile(ctx context.Context, title string, defaultFilename string, _ string, _ string, base64Content string) string {
 	file, err := runtime.SaveFileDialog(ctx, runtime.SaveDialogOptions{
 		Title:           title,
