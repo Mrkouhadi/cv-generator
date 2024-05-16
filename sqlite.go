@@ -95,7 +95,7 @@ func (app *App) AddUser(data string) error {
 	fn := strings.ReplaceAll(user.Name+user.JobTitle, " ", "")
 	imgPath, err := SaveImage(user.Photo, fn)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("Error saving the image: ", err)
 		return err
 	}
 	// Prepare SQL statement for inserting user
