@@ -3,12 +3,15 @@ import { useDispatch } from "react-redux";
 import { addLanguage, updateLanguage } from "../../state/LanguageSlice";
 import { AppDispatch } from "../../state/store";
 import { Language as LanguageType } from "../../utils/types";
+import Toast from "../Taost";
 
 type LangProps = {
   ID?: number;
   TobeUpdated?: LanguageType;
 };
 const Language: React.FC<LangProps> = ({ ID = 0, TobeUpdated }) => {
+  // the toast state
+  const [toast, setToats] = useState({ message: "", type: "" });
   const dispatch: AppDispatch = useDispatch();
   const [language, setLanguage] = useState("");
   const [proficiency, setProficiency] = useState("beginner");
@@ -37,13 +40,24 @@ const Language: React.FC<LangProps> = ({ ID = 0, TobeUpdated }) => {
       if (TobeUpdated) {
         ln.ID = TobeUpdated.ID;
         dispatch(updateLanguage(ln));
+        setToats({
+          message: "A language has been updated successfully",
+          type: "success",
+        });
       } else {
         dispatch(addLanguage(ln));
+        setToats({
+          message: "A Language has been added successfully",
+          type: "success",
+        });
         setLanguage("");
         setProficiency("beginner");
       }
     } else {
-      console.log("Form contains errors. Please fix them before submitting."); // FIXME: a modal to show the error
+      setToats({
+        message: "Please fill in the necessary form inputs",
+        type: "failure",
+      });
     }
   };
 
@@ -53,11 +67,19 @@ const Language: React.FC<LangProps> = ({ ID = 0, TobeUpdated }) => {
       setProficiency(TobeUpdated?.Proficiency);
     }
   }, []);
+
+  // empty the toast after 2 seconds
+  useEffect(() => {
+    const timeOutID = setTimeout(() => {
+      setToats({ message: "", type: "" });
+    }, 2000);
+    return () => clearTimeout(timeOutID);
+  }, [handleSubmit]);
   return (
     <>
       <form
         onSubmit={handleSubmit}
-        className="p-4 gap-4 px-24 flex justify-center bg-bg-light-2 dark:bg-bg-dark-2 dark:text-font-dark-1 text-font-light-1 rounded"
+        className="mt-[30vh] p-4 gap-4 px-24 flex justify-center bg-bg-light-2 dark:bg-bg-dark-2 dark:text-font-dark-1 text-font-light-1 rounded"
       >
         <div className=" flex items-center gap-2 relative w-full">
           <label className="" htmlFor="language">
@@ -105,6 +127,15 @@ const Language: React.FC<LangProps> = ({ ID = 0, TobeUpdated }) => {
           >
             +
           </button>
+        </div>
+        <div
+          className={`${
+            toast.message !== "" ? "flex" : "hidden"
+          } absolute right-0 bottom-0 `}
+        >
+          <Toast type={toast.type}>
+            <div className="p-4">{toast.message}</div>
+          </Toast>
         </div>
       </form>
     </>

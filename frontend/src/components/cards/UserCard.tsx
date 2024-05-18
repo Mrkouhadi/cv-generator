@@ -32,6 +32,11 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
         className=" p-2 text-start flex flex-col gap-2"
         to={`/user/${user.ID}`}
       >
+        <img
+          src={"http://localhost:34115/" + user.Photo}
+          alt={user.Name + " Profile Photo"}
+          className="h-80 w-full rounded"
+        />
         <h1 className="">
           Name:{" "}
           <span className="font-bold">

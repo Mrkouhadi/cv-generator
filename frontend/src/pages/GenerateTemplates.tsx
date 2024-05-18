@@ -5,7 +5,7 @@ import { useRef, useState } from "react";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 import { SendPdfFile, SendPngFile } from "../../wailsjs/go/main/App";
-import { ArrowUturnLeftIcon } from "@heroicons/react/24/solid";
+import { ArrowLeftIcon } from "@heroicons/react/24/solid";
 import Canadian2 from "../components/templates/Canadian2";
 
 const GenerateTemplates: React.FC = () => {
@@ -62,10 +62,10 @@ const GenerateTemplates: React.FC = () => {
     <div className="relative min-h-screen p-4">
       {/* go back button */}
       <button
-        className="absolute left-2 top-2  bg-red-400 p-2 rounded-full"
+        className="absolute left-2 top-2  p-2"
         onClick={() => navigate(-1)}
       >
-        <ArrowUturnLeftIcon className="w-6 h-6 text-white" />
+        <ArrowLeftIcon className="w-6 h-6 text-black dark:text-white " />
       </button>
 
       <div className="flex flex-col gap-4 pt-10 min-h-screen">

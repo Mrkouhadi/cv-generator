@@ -10,9 +10,11 @@ interface PersonDetailsProps {
 }
 
 const PersonDetails: React.FC<PersonDetailsProps> = ({ userTobeUpdated }) => {
+  // the toast state
   const [toast, setToats] = useState({ message: "", type: "" });
+  // a dispatcher of redux-toolkit
   const dispatch: AppDispatch = useDispatch();
-
+  // the user's data state
   const [imageSrc, setImageSrc] = useState<any>("");
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
@@ -22,6 +24,7 @@ const PersonDetails: React.FC<PersonDetailsProps> = ({ userTobeUpdated }) => {
   const [nationality, setNationality] = useState("");
   const [jobTitle, setJobTitle] = useState("");
   const [description, setDescription] = useState("");
+  // the errors state
   const [errors, setErrors] = useState({
     fullName: "",
     email: "",
@@ -33,7 +36,7 @@ const PersonDetails: React.FC<PersonDetailsProps> = ({ userTobeUpdated }) => {
     description: "",
     image: "",
   });
-
+  // uploading images handler
   const handleImageChange = (event: any) => {
     const file = event.target.files[0];
     if (file) {
@@ -44,14 +47,14 @@ const PersonDetails: React.FC<PersonDetailsProps> = ({ userTobeUpdated }) => {
       reader.readAsDataURL(file);
     }
   };
-
+  // the form submittion handler
   const handleSubmit = (event: any) => {
     event.preventDefault();
     // Perform validation
     const newErrors = {
       fullName: fullName ? "" : "Full Name is required",
       email: email ? "" : "Email is required",
-      birthdate: birthdate ? "" : "Birthdate is required",
+      birthdate: birthdate ? "" : "Birth date is required",
       telephone: telephone ? "" : "Telephone is required",
       address: address ? "" : "Address is required",
       nationality: nationality ? "" : "nationality is required",
@@ -74,6 +77,7 @@ const PersonDetails: React.FC<PersonDetailsProps> = ({ userTobeUpdated }) => {
         JobTitle: jobTitle,
         Description: description,
       };
+      // in case of: updating user's data
       if (userTobeUpdated) {
         u.ID = userTobeUpdated.ID;
         dispatch(updateUser(u));
@@ -82,31 +86,30 @@ const PersonDetails: React.FC<PersonDetailsProps> = ({ userTobeUpdated }) => {
           type: "success",
         });
       } else {
+        // in case of: adding new user
         dispatch(addUser(u));
         setToats({
           message: "User has been added successfully",
           type: "success",
         });
+        setFullName("");
+        setEmail("");
+        setImageSrc("");
+        setTelephone("");
+        setBirthdate("");
+        setAddress("");
+        setJobTitle("");
+        setDescription("");
+        setNationality("");
       }
-      setFullName("");
-      setEmail("");
-      setImageSrc("");
-      setTelephone("");
-      setBirthdate("");
-      setAddress("");
-      setJobTitle("");
-      setDescription("");
-      setNationality("");
     } else {
-      console.log("Form contains errors. Please fix them before submitting."); // FIXME: a modal to show the error
       setToats({
         message:
-          "Please fill in the necessary inputs before submitting the form",
+          "Please fill in the necessary form inputs before submitting the form",
         type: "failure",
       });
     }
   };
-
   // for update: if this form has received data to be updated we will populate the inputs first
   useEffect(() => {
     if (userTobeUpdated) {
@@ -114,13 +117,25 @@ const PersonDetails: React.FC<PersonDetailsProps> = ({ userTobeUpdated }) => {
       setEmail(userTobeUpdated.Email);
       setImageSrc(userTobeUpdated.Photo);
       setTelephone(userTobeUpdated.Telephone);
-      setBirthdate(JSON.stringify(userTobeUpdated.Birthdate));
+      // Convert the birthdate to YYYY-MM-DD format
+      const birthdateFormatted = new Date(userTobeUpdated.Birthdate)
+        .toISOString()
+        .split("T")[0];
+      setBirthdate(birthdateFormatted);
+
       setAddress(userTobeUpdated.Address);
       setJobTitle(userTobeUpdated.JobTitle);
       setDescription(userTobeUpdated.Description);
       setNationality(userTobeUpdated.Nationality);
     }
-  }, []);
+  }, [userTobeUpdated]);
+  // empty the toast after 2 seconds
+  useEffect(() => {
+    const timeOutID = setTimeout(() => {
+      setToats({ message: "", type: "" });
+    }, 2000);
+    return () => clearTimeout(timeOutID);
+  }, [handleSubmit]);
 
   return (
     <form
@@ -309,9 +324,15 @@ const PersonDetails: React.FC<PersonDetailsProps> = ({ userTobeUpdated }) => {
       >
         {userTobeUpdated ? "Update user" : "Register User"}
       </button>
-      <Toast type={toast.type}>
-        <div className="p-4">{toast.message}</div>
-      </Toast>
+      <div
+        className={`${
+          toast.message !== "" ? "flex" : "hidden"
+        } absolute right-0 bottom-0 `}
+      >
+        <Toast type={toast.type}>
+          <div className="p-4">{toast.message}</div>
+        </Toast>
+      </div>
     </form>
   );
 };

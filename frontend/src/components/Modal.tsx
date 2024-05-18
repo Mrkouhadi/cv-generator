@@ -13,7 +13,7 @@ const Modal: React.FC<ModalProps> = ({ show, onClose, children }) => {
   }
 
   return ReactDOM.createPortal(
-    <div className="bg-black fixed top-0 left-36 right-0 bottom-0 bg-black bg-opacity-80">
+    <div className="bg-black fixed top-0 left-36 right-0 bottom-0 bg-black bg-opacity-90">
       <button
         onClick={onClose}
         className="bg-white w-10 h-10 rounded-full rounded text-red-600 absolute z-99 top-1 left-1 text-3xl"

@@ -1,4 +1,4 @@
-import { ArrowUturnLeftIcon } from "@heroicons/react/24/solid";
+import { ArrowLeftIcon } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -79,12 +79,12 @@ const UserPage: React.FC = () => {
     }
   });
   return (
-    <div className="relative h-screen px-2 py-8">
+    <div className="relative min-h-screen px-2 py-8">
       <button
-        className="absolute left-4 top-4  bg-red-400 p-2 rounded-full"
+        className="absolute left-2 top-2  p-2 rounded"
         onClick={() => navigate(-1)}
       >
-        <ArrowUturnLeftIcon className="w-6 h-6 text-white" />
+        <ArrowLeftIcon className="w-6 h-6 text-black dark:text-white " />
       </button>
       {generateBtn && (
         <Link
@@ -95,15 +95,21 @@ const UserPage: React.FC = () => {
           GENERATE
         </Link>
       )}
-      <div className="py-">
-        <p className="text-center font-extrabold text-3xl tracking-wide">
-          {user && <>{user?.Name}</>}
-        </p>
-        <p className="text-center font- text-xl tracking-wide">
-          {user && <>{user?.JobTitle}</>}
-        </p>
-        <div className="flex items-center flex-wrap gap-4 mt-4">
-          <p className="">
+
+      <div className="flex gap-8 mt-8">
+        <img
+          src={"http://localhost:34115/" + user?.Photo}
+          alt={user?.Name}
+          className="h-[600px] w-[400px] rounded-full"
+        />
+        <div className="flex flex-col gap-4 text-xl tracking-wide">
+          <p className="text-center font-extrabold text-5xl">
+            {user && <>{user?.Name}</>}
+          </p>
+          <p className="text-center font- text-2xl ">
+            {user && <>{user?.JobTitle}</>}
+          </p>
+          <p className="mt-6">
             <span className="font-bold">Email: </span>
             {user?.Email}
           </p>
@@ -129,11 +135,11 @@ const UserPage: React.FC = () => {
                 : "Unknown" // Handle other types or unexpected values
             }
           </p>
+          <p className="">
+            <span className="font-bold">Personal Summary:</span>
+            {user?.Description}
+          </p>
         </div>
-        <p className="mt-4">
-          <span className="font-bold">Description:</span>
-          {user?.Description}
-        </p>
       </div>
 
       {/* fetch all experiences, educations, skills, languages */}
@@ -203,7 +209,6 @@ const UserPage: React.FC = () => {
             return <LanguageCard key={lan.ID} language={lan} />;
           })}
       </div>
-
       <Modal show={showModal} onClose={handleClose}>
         {(() => {
           // Immediately-invoked function expression (IIFE) to allow return statements

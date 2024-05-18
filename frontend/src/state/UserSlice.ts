@@ -32,11 +32,14 @@ export const deleteUser = createAsyncThunk<number, {UserId: number, File: string
     await DeleteUserByID(UserId,File);
     return UserId; // return the UserId
   });
+
 // Define thunk for updating a user
 export const updateUser = createAsyncThunk<User, User>('users/update', async (userData:User) => {
     await UpdateUser(JSON.stringify(userData));
+    console.log("slice: ", userData)
     return userData;
   });
+
 // Define thunk for fetching a single user
 export const fetchUserByID = createAsyncThunk<User, number>('users/fetchByID', async (userID: number) => {
   const response = await GetUserByID(userID);

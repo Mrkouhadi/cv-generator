@@ -3,12 +3,15 @@ import { Education as EducationType } from "../../utils/types";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../state/store";
 import { addEducation, updateEducation } from "../../state/EducationSlice";
+import Toast from "../Taost";
 
 type EduProps = {
   ID?: number;
   TobeUpdated?: EducationType;
 };
 const Education: React.FC<EduProps> = ({ ID = 0, TobeUpdated }) => {
+  // the toast state
+  const [toast, setToats] = useState({ message: "", type: "" });
   const dispatch: AppDispatch = useDispatch();
 
   const [degree, setDegree] = useState("");
@@ -56,20 +59,29 @@ const Education: React.FC<EduProps> = ({ ID = 0, TobeUpdated }) => {
       if (TobeUpdated) {
         edu.ID = TobeUpdated.ID;
         dispatch(updateEducation(edu));
+        setToats({
+          message: "Education has been updated successfully",
+          type: "success",
+        });
       } else {
         dispatch(addEducation(edu));
+        setToats({
+          message: "Education has been added successfully",
+          type: "success",
+        });
+        setDegree("");
+        setMajor("");
+        setUniversity("");
+        setStartDate("");
+        setEndDate("");
+        setCountry("");
+        setCity("");
       }
-
-      console.log("Form submitted successfully"); // FIXME: a modal to show the success message
-      setDegree("");
-      setMajor("");
-      setUniversity("");
-      setStartDate("");
-      setEndDate("");
-      setCountry("");
-      setCity("");
     } else {
-      console.log("Form contains errors. Please fix them before submitting."); // FIXME: a modal to show the error
+      setToats({
+        message: "Please fill in the necessary form inputs",
+        type: "failure",
+      });
     }
   };
 
@@ -81,8 +93,25 @@ const Education: React.FC<EduProps> = ({ ID = 0, TobeUpdated }) => {
       setDegree(TobeUpdated.Degree);
       setCountry(TobeUpdated.Country);
       setCity(TobeUpdated.City);
+      // Convert the endate to YYYY-MM-DD format
+      const formattedendDate = new Date(TobeUpdated.EndDate)
+        .toISOString()
+        .split("T")[0];
+      setEndDate(formattedendDate);
+      // Convert the startdate to YYYY-MM-DD format
+      const formattedstartDate = new Date(TobeUpdated.StartDate)
+        .toISOString()
+        .split("T")[0];
+      setStartDate(formattedstartDate);
     }
   }, []);
+  // empty the toast after 2 seconds
+  useEffect(() => {
+    const timeOutID = setTimeout(() => {
+      setToats({ message: "", type: "" });
+    }, 2000);
+    return () => clearTimeout(timeOutID);
+  }, [handleSubmit]);
   return (
     <form
       onSubmit={handleSubmit}
@@ -232,8 +261,16 @@ const Education: React.FC<EduProps> = ({ ID = 0, TobeUpdated }) => {
       <button type="submit" className="p-2 bg-primary text-white rounded w-4/5">
         {TobeUpdated ? "Update Education" : "Add Education"}
       </button>
+      <div
+        className={`${
+          toast.message !== "" ? "flex" : "hidden"
+        } absolute right-0 bottom-0 `}
+      >
+        <Toast type={toast.type}>
+          <div className="p-4">{toast.message}</div>
+        </Toast>
+      </div>
     </form>
   );
 };
-
 export default Education;

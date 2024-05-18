@@ -3,12 +3,15 @@ import { useDispatch } from "react-redux";
 import { addSkill, updateSkill } from "../../state/SkillSlice";
 import { AppDispatch } from "../../state/store";
 import { Skill as SkillType } from "../../utils/types";
+import Toast from "../Taost";
 
 type SkillsProps = {
   ID?: number;
   TobeUpdated?: SkillType;
 };
 const Skill: React.FC<SkillsProps> = ({ ID = 0, TobeUpdated }) => {
+  // the toast state
+  const [toast, setToats] = useState({ message: "", type: "" });
   const dispatch: AppDispatch = useDispatch();
 
   const [title, setTitle] = useState("");
@@ -38,15 +41,24 @@ const Skill: React.FC<SkillsProps> = ({ ID = 0, TobeUpdated }) => {
       if (TobeUpdated) {
         sk.ID = TobeUpdated.ID;
         dispatch(updateSkill(sk));
-        setProficiency("beginner");
+        setToats({
+          message: "A skill has been updated successfully",
+          type: "success",
+        });
       } else {
         dispatch(addSkill(sk));
-        console.log("Form submitted successfully"); // FIXME: a modal to show the success message
+        setToats({
+          message: "A skill has been added successfully",
+          type: "success",
+        });
         setProficiency("beginner");
         setTitle("");
       }
     } else {
-      console.log("Form contains errors. Please fix them before submitting."); // FIXME: a modal to show the error
+      setToats({
+        message: "Please fill in the necessary form inputs",
+        type: "failure",
+      });
     }
   };
   // for update: if this form has received data to be updated we will populate the inputs first
@@ -56,10 +68,19 @@ const Skill: React.FC<SkillsProps> = ({ ID = 0, TobeUpdated }) => {
       setProficiency(TobeUpdated.Proficiency);
     }
   }, []);
+
+  // empty the toast after 2 seconds
+  useEffect(() => {
+    const timeOutID = setTimeout(() => {
+      setToats({ message: "", type: "" });
+    }, 2000);
+    return () => clearTimeout(timeOutID);
+  }, [handleSubmit]);
+
   return (
     <form
       onSubmit={handleSubmit}
-      className="relative p-4 px-24 w-full flex items-center justify-center gap-4 bg-bg-light-2 dark:bg-bg-dark-2 dark:text-font-dark-1 text-font-light-1 rounded"
+      className="mt-[30vh] relative p-4 px-24 w-full flex items-center justify-center gap-4 bg-bg-light-2 dark:bg-bg-dark-2 dark:text-font-dark-1 text-font-light-1 rounded"
     >
       <div className="flex items-center gap-2 w-full relative  py-2">
         <label className="" htmlFor="title">
@@ -103,6 +124,15 @@ const Skill: React.FC<SkillsProps> = ({ ID = 0, TobeUpdated }) => {
       <button type="submit" className="bg-primary text-white rounded p-2 px-4">
         {TobeUpdated ? "Update" : "Add"}
       </button>
+      <div
+        className={`${
+          toast.message !== "" ? "flex" : "hidden"
+        } absolute right-0 bottom-0 `}
+      >
+        <Toast type={toast.type}>
+          <div className="p-4">{toast.message}</div>
+        </Toast>
+      </div>
     </form>
   );
 };
