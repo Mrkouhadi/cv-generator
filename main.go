@@ -27,6 +27,7 @@ func main() {
 		Height:           768,
 		MinWidth:         1024,
 		MinHeight:        768,
+		MaxWidth:         2048,
 		WindowStartState: options.Minimised,
 		AssetServer: &assetserver.Options{
 			Assets: assets,
