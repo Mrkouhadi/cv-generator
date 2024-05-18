@@ -214,10 +214,12 @@ func (app *App) UpdateUser(data string) error {
 		fmt.Println("Error unmarshalling JSON:", err)
 		return nil
 	}
-	// saving the image file and getting back the path to store it in the database
-	imgPath, err := SaveImage(user.Photo, user.Name+user.JobTitle)
+
+	// saving the new image file and getting back the path to store it in the database
+	fn := strings.ReplaceAll(user.Name+user.JobTitle, " ", "")
+	imgPath, err := SaveImage(user.Photo, fn)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("Error saving the image: ", err)
 		return err
 	}
 
@@ -228,11 +230,11 @@ func (app *App) UpdateUser(data string) error {
 		return err
 	}
 	defer stmt.Close()
-
 	_, err = stmt.Exec(user.Name, user.Email, imgPath, user.Birthdate, user.Telephone, user.Address, user.Nationality, user.JobTitle, user.Description, user.ID)
 	if err != nil {
 		return err
 	}
+
 	return nil
 }
 
