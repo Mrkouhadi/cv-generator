@@ -16,10 +16,10 @@ const Users: React.FC = () => {
   const handleClose = () => setShowModal(false);
   useEffect(() => {
     dispatch(fetchAllUsers());
-  }, [dispatch]);
+  }, [dispatch, showModal]);
 
   return (
-    <div className="h-screen w-full">
+    <div className="pb-6 w-full">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-extrabold tracking-widest my-4">Users:</h1>
         <button

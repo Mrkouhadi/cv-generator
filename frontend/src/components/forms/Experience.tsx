@@ -3,11 +3,14 @@ import { useDispatch } from "react-redux";
 import { addExperience, updateExperience } from "../../state/ExperienceSlice";
 import { AppDispatch } from "../../state/store";
 import { Experience as ExperienceType } from "../../utils/types";
+import Toast from "../Taost";
 type ExpProps = {
   ID?: number;
   TobeUpdated?: ExperienceType;
 };
 const Experience: React.FC<ExpProps> = ({ ID = 0, TobeUpdated }) => {
+  // the toast state
+  const [toast, setToats] = useState({ message: "", type: "" });
   const dispatch: AppDispatch = useDispatch();
 
   const [field, setField] = useState("");
@@ -60,20 +63,30 @@ const Experience: React.FC<ExpProps> = ({ ID = 0, TobeUpdated }) => {
       if (TobeUpdated) {
         exp.ID = TobeUpdated.ID;
         dispatch(updateExperience(exp));
+        setToats({
+          message: "Experience has been updated successfully",
+          type: "success",
+        });
       } else {
         dispatch(addExperience(exp));
+        setToats({
+          message: "Experience has been added successfully",
+          type: "success",
+        });
+        setField("");
+        setCompany("");
+        setCountry("");
+        setCity("");
+        setJobTitle("");
+        setStartDate("");
+        setEndDate("");
+        setDesc("");
       }
-      console.log("Form submitted successfully"); // FIXME: a modal to show the success message
-      setField("");
-      setCompany("");
-      setCountry("");
-      setCity("");
-      setJobTitle("");
-      setStartDate("");
-      setEndDate("");
-      setDesc("");
     } else {
-      console.log("Form contains errors. Please fix them before submitting."); // FIXME: a modal to show the error
+      setToats({
+        message: "Please fill in the necessary form inputs",
+        type: "failure",
+      });
     }
   };
   // for update: if this form has received data to be updated we will populate the inputs first
@@ -85,8 +98,26 @@ const Experience: React.FC<ExpProps> = ({ ID = 0, TobeUpdated }) => {
       setDesc(TobeUpdated.Description);
       setCountry(TobeUpdated.Country);
       setCity(TobeUpdated.City);
+      // Convert the endate to YYYY-MM-DD format
+      const formattedendDate = new Date(TobeUpdated.EndDate)
+        .toISOString()
+        .split("T")[0];
+      setEndDate(formattedendDate);
+      // Convert the endate to YYYY-MM-DD format
+      const formattedstartDate = new Date(TobeUpdated.StartDate)
+        .toISOString()
+        .split("T")[0];
+      setStartDate(formattedstartDate);
     }
   }, []);
+
+  // empty the toast after 2 seconds
+  useEffect(() => {
+    const timeOutID = setTimeout(() => {
+      setToats({ message: "", type: "" });
+    }, 2000);
+    return () => clearTimeout(timeOutID);
+  }, [handleSubmit]);
   return (
     <form
       onSubmit={handleSubmit}
@@ -253,6 +284,15 @@ const Experience: React.FC<ExpProps> = ({ ID = 0, TobeUpdated }) => {
       <button type="submit" className="p-2 bg-primary text-white rounded w-4/5">
         {TobeUpdated ? "Update Experience" : "Add Experience"}
       </button>
+      <div
+        className={`${
+          toast.message !== "" ? "flex" : "hidden"
+        } absolute right-0 bottom-0 `}
+      >
+        <Toast type={toast.type}>
+          <div className="p-4">{toast.message}</div>
+        </Toast>
+      </div>
     </form>
   );
 };
