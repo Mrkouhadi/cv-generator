@@ -6,7 +6,9 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strconv"
 	"strings"
+	"time"
 
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -91,9 +93,10 @@ func (app *App) AddUser(data string) error {
 		fmt.Println("Error unmarshalling JSON:", err)
 		return nil
 	}
-	// saving the image file and getting back the path to store it in the database
-	fn := strings.ReplaceAll(user.Name+user.JobTitle, " ", "")
-	imgPath, err := SaveImage(user.Photo, fn)
+	// saving the new image file and getting back the path to store it in the database
+	d := time.Now()
+	dateString := d.Format("2006-01-02 15:04:05") // Format: YYYY-MM-DD
+	imgPath, err := SaveImage(user.Photo, "img-"+strconv.Itoa(user.ID)+strings.ReplaceAll(dateString, " ", ""))
 	if err != nil {
 		fmt.Println("Error saving the image: ", err)
 		return err
@@ -214,10 +217,11 @@ func (app *App) UpdateUser(data string) error {
 		fmt.Println("Error unmarshalling JSON:", err)
 		return nil
 	}
-
+	fmt.Println(user)
 	// saving the new image file and getting back the path to store it in the database
-	fn := strings.ReplaceAll(user.Name+user.JobTitle, " ", "")
-	imgPath, err := SaveImage(user.Photo, fn)
+	d := time.Now()
+	dateString := d.Format("2006-01-02 15:04:05") // Format: YYYY-MM-DD
+	imgPath, err := SaveImage(user.Photo, "img-"+strconv.Itoa(user.ID)+strings.ReplaceAll(dateString, " ", ""))
 	if err != nil {
 		fmt.Println("Error saving the image: ", err)
 		return err
@@ -234,7 +238,6 @@ func (app *App) UpdateUser(data string) error {
 	if err != nil {
 		return err
 	}
-
 	return nil
 }
 

@@ -21,7 +21,7 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const handleOpen = () => setShowModal(true);
   const handleClose = () => setShowModal(false);
-  console.log(user.Photo);
+
   return (
     <div
       key={user.ID}

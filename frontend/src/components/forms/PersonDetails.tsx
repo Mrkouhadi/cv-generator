@@ -85,9 +85,8 @@ const PersonDetails: React.FC<PersonDetailsProps> = ({ userTobeUpdated }) => {
           message: "User has been updated successfully",
           type: "success",
         });
-      }
-      // in case of: adding new user
-      else {
+      } else {
+        // in case of: adding new user
         dispatch(addUser(u));
         setToats({
           message: "User has been added successfully",
@@ -111,7 +110,6 @@ const PersonDetails: React.FC<PersonDetailsProps> = ({ userTobeUpdated }) => {
       });
     }
   };
-
   // for update: if this form has received data to be updated we will populate the inputs first
   useEffect(() => {
     if (userTobeUpdated) {
@@ -119,7 +117,6 @@ const PersonDetails: React.FC<PersonDetailsProps> = ({ userTobeUpdated }) => {
       setEmail(userTobeUpdated.Email);
       setImageSrc(userTobeUpdated.Photo);
       setTelephone(userTobeUpdated.Telephone);
-
       // Convert the birthdate to YYYY-MM-DD format
       const birthdateFormatted = new Date(userTobeUpdated.Birthdate)
         .toISOString()
@@ -130,10 +127,8 @@ const PersonDetails: React.FC<PersonDetailsProps> = ({ userTobeUpdated }) => {
       setJobTitle(userTobeUpdated.JobTitle);
       setDescription(userTobeUpdated.Description);
       setNationality(userTobeUpdated.Nationality);
-      console.log("USER TO BE UPDATED HAS BEEN FILLED IN THE STATE ON RENDER"); // FIXME: a modal to show the error
     }
   }, [userTobeUpdated]);
-
   // empty the toast after 2 seconds
   useEffect(() => {
     const timeOutID = setTimeout(() => {

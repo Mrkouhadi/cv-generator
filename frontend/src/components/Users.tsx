@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllUsers, selectAllUsers } from "../state/UserSlice";
-import { RootState, AppDispatch } from "../state/store"; // Import RootState if you have it defined in your Redux store
+import { RootState, AppDispatch } from "../state/store";
 
 import UserCard from "./cards/UserCard";
 import PersonDetails from "./forms/PersonDetails";
@@ -10,13 +10,17 @@ import Modal from "./Modal";
 const Users: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
   const users = useSelector((state: RootState) => selectAllUsers(state));
+
   // Modal
   const [showModal, setShowModal] = useState<boolean>(false);
   const handleOpen = () => setShowModal(true);
-  const handleClose = () => setShowModal(false);
+  const handleClose = () => {
+    setShowModal(false);
+  };
+  // refetch users to make sure the page is updated
   useEffect(() => {
     dispatch(fetchAllUsers());
-  }, [dispatch, showModal]);
+  }, [showModal]);
 
   return (
     <div className="pb-6 w-full">
