@@ -1,1 +1,38 @@
-{}
+{
+    "titles": {
+        "profiles": "Profiles",
+        "education": "Education",
+        "experience": "Experience",
+        "skills": "Skills",
+        "languages": "Languages",
+        "skill": "Skill",
+        "language": "Language",
+        "proficiency": "Proficiency"
+    },
+    "education": {
+        "degree": "Degree",
+        "major": "Major",
+        "university": "University",
+        "started": "Started",
+        "finished": "Finished",
+        "country": "Country",
+        "city": "City"
+    },
+    "experience": {
+        "jobTitle": "Job Title",
+        "company": "Company",
+        "started": "Started",
+        "ended": "Ended",
+        "country": "Country",
+        "city": "City",
+        "description": "Description",
+        "field": "Field"
+    },
+    "proficiency": {
+        "beginner": "Beginner",
+        "elementary": "Elementary",
+        "proficient": "Proficient",
+        "advanced": "Advanced",
+        "native": "Native"
+    }
+}

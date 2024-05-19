@@ -11,9 +11,24 @@
         "templates": "模板"
     },
     "button": {
-        "register": "登记",
+        "register": "注册",
         "add": "添加",
-        "update": "更新",
-        "delete": "删除"
+        "edit": "编辑",
+        "delete": "删除",
+        "add-new-profile": "添加新档案",
+        "generate": "生成简历",
+        "save": "保存",
+        "exportPDF": "导出为PDF",
+        "exportPNG": "导出为PNG"
+    },
+    "personalDetails": {
+        "name": "姓名",
+        "email": "电子邮件",
+        "telephone": "电话",
+        "address": "地址",
+        "birthdate": "出生日期",
+        "personalSummary": "个人简介",
+        "nationality": "国籍",
+        "jobTitle": "职位"
     }
 }

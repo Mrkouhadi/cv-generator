@@ -1,1 +1,38 @@
-{}
+{
+    "titles": {
+        "profiles": "Profils",
+        "education": "Éducation",
+        "experience": "Expérience",
+        "skills": "Compétences",
+        "languages": "Langues",
+        "skill": "Compétence",
+        "language": "Langue",
+        "proficiency": "Maîtrise"
+    },
+    "education": {
+        "degree": "Diplôme",
+        "major": "Majeure",
+        "university": "Université",
+        "started": "Commencé",
+        "finished": "Terminé",
+        "country": "Pays",
+        "city": "Ville"
+    },
+    "experience": {
+        "jobTitle": "Intitulé du poste",
+        "company": "Entreprise",
+        "started": "Commencé",
+        "ended": "Terminé",
+        "country": "Pays",
+        "city": "Ville",
+        "description": "Description",
+        "field": "Domaine"
+    },
+    "proficiency": {
+        "beginner": "Débutant",
+        "elementary": "Élémentaire",
+        "proficient": "Maîtrisé",
+        "advanced": "Avancé",
+        "native": "Natif"
+    }
+}

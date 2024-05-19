@@ -6,11 +6,14 @@ import { deleteUser } from "../../state/UserSlice";
 import { AppDispatch } from "../../state/store"; // Import RootState if you have it defined in your Redux store
 import { useDispatch } from "react-redux";
 import Modal from "../Modal";
+import { useTranslation } from "react-i18next";
 
 type UserCardProps = {
   user: User;
 };
 const UserCard: React.FC<UserCardProps> = ({ user }) => {
+  const [t, i18n] = useTranslation("global");
+
   const dispatch: AppDispatch = useDispatch();
 
   const handleDeleteUser = (userId: number, file: string) => {
@@ -38,7 +41,7 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
           className="h-80 w-full rounded"
         />
         <h1 className="">
-          Name:{" "}
+          {t("personalDetails.name")}:{" "}
           <span className="font-bold">
             {user.Name.length > 20
               ? user.Name.substring(0, 20) + "..."
@@ -46,7 +49,7 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
           </span>
         </h1>
         <h1 className="">
-          Birthdate:{" "}
+          {t("personalDetails.birthdate")}:{" "}
           <span className="font-bold">
             {
               typeof user.Birthdate === "string" // Check if Birthdate is a string
@@ -58,7 +61,7 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
           </span>
         </h1>
         <h1 className="">
-          Job Title:{" "}
+          {t("personalDetails.jobTitle")}:{" "}
           <span className="font-bold">
             {user.JobTitle.length > 20
               ? user.JobTitle.substring(0, 20) + "..."
@@ -66,7 +69,7 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
           </span>{" "}
         </h1>
         <h1 className="">
-          Email:{" "}
+          {t("personalDetails.email")}:{" "}
           <span className="font-bold">
             {user.Email.length > 20
               ? user.Email.substring(0, 20) + "..."
@@ -79,13 +82,13 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
           className="bg-red-500 text-white p-2 rounded"
           onClick={() => handleDeleteUser(user.ID!, user.Photo)}
         >
-          Delete
+          {t("button.delete")}
         </button>
         <button
           className="bg-green-700 text-white p-2 px-4 rounded"
           onClick={handleOpen}
         >
-          Edit
+          {t("button.edit")}
         </button>
       </div>
       <Modal show={showModal} onClose={handleClose}>

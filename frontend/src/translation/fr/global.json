@@ -11,9 +11,24 @@
         "templates": "Modèles"
     },
     "button": {
-        "register": "Registre",
+        "register": "S'inscrire",
         "add": "Ajouter",
-        "update": "Mettre à jour",
-        "delete": "Supprimer"
+        "edit": "Modifier",
+        "delete": "Supprimer",
+        "add-new-profile": "Ajouter un nouveau profil",
+        "generate": "Générer un CV",
+        "save": "Enregistrer",
+        "exportPDF": "Exporter au format PDF",
+        "exportPNG": "Exporter au format PNG"
+    },
+    "personalDetails": {
+        "name": "Nom",
+        "email": "Email",
+        "telephone": "Téléphone",
+        "address": "Adresse",
+        "birthdate": "Date de naissance",
+        "personalSummary": "Résumé personnel",
+        "nationality": "Nationalité",
+        "jobTitle": "Intitulé du poste"
     }
 }

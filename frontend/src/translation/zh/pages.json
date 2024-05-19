@@ -1,1 +1,38 @@
-{}
+{
+    "titles": {
+        "profiles": "档案",
+        "education": "教育",
+        "experience": "经验",
+        "skills": "技能",
+        "languages": "语言",
+        "skill": "技能",
+        "language": "语言",
+        "proficiency": "熟练度"
+    },
+    "education": {
+        "degree": "学位",
+        "major": "专业",
+        "university": "大学",
+        "started": "开始",
+        "finished": "完成",
+        "country": "国家",
+        "city": "城市"
+    },
+    "experience": {
+        "jobTitle": "职位",
+        "company": "公司",
+        "started": "开始",
+        "ended": "结束",
+        "country": "国家",
+        "city": "城市",
+        "description": "描述",
+        "field": "领域"
+    },
+    "proficiency": {
+        "beginner": "初学者",
+        "elementary": "初级",
+        "proficient": "熟练",
+        "advanced": "高级",
+        "native": "母语"
+    }
+}

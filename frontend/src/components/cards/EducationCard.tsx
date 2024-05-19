@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { deleteEducation } from "../../state/EducationSlice";
 import { AppDispatch } from "../../state/store";
@@ -10,6 +11,9 @@ type ProspType = {
   education: eduType;
 };
 const EducationCard: React.FC<ProspType> = ({ education }) => {
+  const [t, _] = useTranslation("global");
+  const [tp, __] = useTranslation("pages");
+
   const dispatch: AppDispatch = useDispatch();
   // Modal
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -20,21 +24,21 @@ const EducationCard: React.FC<ProspType> = ({ education }) => {
     <div className="bg-bg-light-1 dark:bg-bg-dark-2 p-2 flex flex-col gap-2 shadow hover:shadow-lg">
       <div className="flex items-center justify-between">
         <p className="">
-          <span className="font-bold">Degree: </span>
+          <span className="font-bold">{tp("education.degree")}: </span>
           {education.Degree}
         </p>
         <p className="text-start">
-          <span className="font-bold ">Major:</span>
+          <span className="font-bold ">{tp("education.major")}:</span>
           {education.Major}
         </p>
       </div>
       <p className="">
-        <span className="font-bold">University:</span>
+        <span className="font-bold">{tp("education.university")}:</span>
         {education.University}
       </p>
       <div className="flex items-center justify-between">
         <p className="">
-          <span className="font-bold">Started:</span>
+          <span className="font-bold">{tp("education.started")}:</span>
           {
             typeof education.StartDate === "string" // Check if Birthdate is a string
               ? (education.StartDate as string).substring(0, 10) // Use substring method on strings
@@ -44,7 +48,7 @@ const EducationCard: React.FC<ProspType> = ({ education }) => {
           }
         </p>
         <p className="">
-          <span className="font-bold">Finished:</span>
+          <span className="font-bold">{tp("education.finished")}:</span>
           {
             typeof education.EndDate === "string" // Check if Birthdate is a string
               ? (education.EndDate as string).substring(0, 10) // Use substring method on strings
@@ -56,11 +60,11 @@ const EducationCard: React.FC<ProspType> = ({ education }) => {
       </div>
       <div className="flex items-center justify-between">
         <p className="">
-          <span className="font-bold">Country:</span>
+          <span className="font-bold">{tp("education.country")}:</span>
           {education.Country}
         </p>
         <p className="">
-          <span className="font-bold">City:</span>
+          <span className="font-bold"> {tp("education.city")}: </span>
           {education.City}
         </p>
       </div>
@@ -69,13 +73,13 @@ const EducationCard: React.FC<ProspType> = ({ education }) => {
           onClick={() => dispatch(deleteEducation(education.ID!))}
           className="bg-red-500 text-white p-2 rounded"
         >
-          Delete
+          {t("button.delete")}
         </button>
         <button
           onClick={handleOpen}
           className="bg-green-600 text-white p-2 px-4 rounded"
         >
-          Edit
+          {t("button.edit")}
         </button>
       </div>
       <Modal show={showModal} onClose={handleClose}>

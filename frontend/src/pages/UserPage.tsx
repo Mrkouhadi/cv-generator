@@ -1,5 +1,6 @@
 import { ArrowLeftIcon } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import EducationCard from "../components/cards/EducationCard";
@@ -25,6 +26,9 @@ import { AppDispatch, RootState } from "../state/store";
 import { fetchUserByID, selectUserByID } from "../state/UserSlice";
 
 const UserPage: React.FC = () => {
+  const [t, _] = useTranslation("global");
+  const [tp, __] = useTranslation("pages");
+
   const params = useParams();
   const id = params.id ? parseInt(params.id, 10) : undefined;
   let navigate = useNavigate();
@@ -84,7 +88,7 @@ const UserPage: React.FC = () => {
         className="absolute left-2 top-2  p-2 rounded"
         onClick={() => navigate(-1)}
       >
-        <ArrowLeftIcon className="w-6 h-6 text-black dark:text-white " />
+        <ArrowLeftIcon className="w-6 h-6 text-black dark:text-white" />
       </button>
       {generateBtn && (
         <Link
@@ -92,10 +96,9 @@ const UserPage: React.FC = () => {
           state={{ user, educations, experiences, skills, languages }}
           className="absolute right-4 text-white top-4  bg-red-400 p-2 rounded"
         >
-          GENERATE
+          {t("button.generate")}
         </Link>
       )}
-
       <div className="flex gap-8 mt-8">
         <img
           src={"http://localhost:34115/" + user?.Photo}
@@ -110,23 +113,31 @@ const UserPage: React.FC = () => {
             {user && <>{user?.JobTitle}</>}
           </p>
           <p className="mt-6">
-            <span className="font-bold">Email: </span>
+            <span className="font-bold">{t("personalDetails.email")}: : </span>
             {user?.Email}
           </p>
           <p className="">
-            <span className="font-bold">Telephone: </span>
+            <span className="font-bold">
+              {t("personalDetails.telephone")}: :{" "}
+            </span>
             {user?.Telephone}
           </p>
           <p className="">
-            <span className="font-bold">Nationality: </span>
+            <span className="font-bold">
+              {t("personalDetails.nationality")}: :{" "}
+            </span>
             {user?.Nationality}
           </p>
           <p className="">
-            <span className="font-bold">Address: </span>
+            <span className="font-bold">
+              {t("personalDetails.address")}: :{" "}
+            </span>
             {user?.Address}
           </p>
           <p className="">
-            <span className="font-bold">Birth Date: </span>
+            <span className="font-bold">
+              {t("personalDetails.birthdate")}: :{" "}
+            </span>
             {
               typeof user?.Birthdate === "string" // Check if Birthdate is a string
                 ? (user?.Birthdate as string).substring(0, 10) // Use substring method on strings
@@ -136,7 +147,9 @@ const UserPage: React.FC = () => {
             }
           </p>
           <p className="">
-            <span className="font-bold">Personal Summary:</span>
+            <span className="font-bold">
+              {t("personalDetails.personalSummary")}:{" "}
+            </span>
             {user?.Description}
           </p>
         </div>
@@ -146,12 +159,12 @@ const UserPage: React.FC = () => {
       <div className="my-4">
         {/* education */}
         <div className="flex items-center justify-between bg-red-300 text-black p-4 my-2 rounded">
-          <h1 className="">Education:</h1>
+          <h1 className="">{tp("titles.education")}:</h1>
           <button
             onClick={() => handleOpen("education")}
             className="rounded bg-primary text-white px-4 py-2 "
           >
-            Add
+            {t("button.add")}
           </button>
         </div>
         <div className="grid grid-cols-2 gap-2">
@@ -163,12 +176,12 @@ const UserPage: React.FC = () => {
       </div>
       {/* experience */}
       <div className="flex items-center justify-between bg-red-300 text-black p-4 my-2 rounded">
-        <h1 className="">Experience:</h1>
+        <h1 className="">{tp("titles.experience")}:</h1>
         <button
           onClick={() => handleOpen("experience")}
           className="rounded bg-primary text-white px-4 py-2"
         >
-          Add
+          {t("button.add")}
         </button>
       </div>
       <div className="grid grid-cols-2 gap-2">
@@ -179,12 +192,12 @@ const UserPage: React.FC = () => {
       </div>
       {/* skills */}
       <div className="flex items-center justify-between bg-red-300 text-black p-4 my-2 rounded">
-        <h1 className="">Skills:</h1>
+        <h1 className="">{tp("titles.skills")}:</h1>
         <button
           onClick={() => handleOpen("skill")}
           className="rounded bg-primary text-white px-4 py-2"
         >
-          Add
+          {t("button.add")}
         </button>
       </div>
       <div className="grid grid-cols-2 gap-2">
@@ -195,12 +208,12 @@ const UserPage: React.FC = () => {
       </div>
       {/* languages */}
       <div className="flex items-center justify-between bg-red-300 text-black p-4 my-2 rounded">
-        <h1 className="">Languages:</h1>
+        <h1 className="">{tp("titles.languages")}:</h1>
         <button
           onClick={() => handleOpen("language")}
           className="rounded bg-primary text-white px-4 py-2"
         >
-          Add
+          {t("button.add")}
         </button>
       </div>
       <div className="grid grid-cols-2 gap-2 mb-12">

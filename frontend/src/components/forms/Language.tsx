@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { addLanguage, updateLanguage } from "../../state/LanguageSlice";
 import { AppDispatch } from "../../state/store";
@@ -10,6 +11,8 @@ type LangProps = {
   TobeUpdated?: LanguageType;
 };
 const Language: React.FC<LangProps> = ({ ID = 0, TobeUpdated }) => {
+  const [t, _] = useTranslation("global");
+  const [tp, __] = useTranslation("pages");
   // the toast state
   const [toast, setToats] = useState({ message: "", type: "" });
   const dispatch: AppDispatch = useDispatch();
@@ -79,11 +82,11 @@ const Language: React.FC<LangProps> = ({ ID = 0, TobeUpdated }) => {
     <>
       <form
         onSubmit={handleSubmit}
-        className="mt-[30vh] p-4 gap-4 px-24 flex justify-center bg-bg-light-2 dark:bg-bg-dark-2 dark:text-font-dark-1 text-font-light-1 rounded"
+        className="mt-[30vh] p-4 gap-4 px-12 flex justify-center bg-bg-light-2 dark:bg-bg-dark-2 dark:text-font-dark-1 text-font-light-1 rounded"
       >
-        <div className=" flex items-center gap-2 relative w-full">
-          <label className="" htmlFor="language">
-            Language:
+        <div className="flex items-center gap-2 relative w-full">
+          <label className="w-24" htmlFor="language">
+            {tp("titles.language")}:
           </label>
           <input
             type="text"
@@ -92,7 +95,7 @@ const Language: React.FC<LangProps> = ({ ID = 0, TobeUpdated }) => {
             onChange={(e) => setLanguage(e.target.value)}
             id="language"
             placeholder=""
-            className="p-2 rounded w-full bg-bg-light-1 dark:bg-bg-dark-1"
+            className="p-2 rounded bg-bg-light-1 dark:bg-bg-dark-1"
           />
           {errors.language && (
             <p className="text-red-500 text-sm absolute -bottom-6">
@@ -108,11 +111,21 @@ const Language: React.FC<LangProps> = ({ ID = 0, TobeUpdated }) => {
             onChange={(e) => setProficiency(e.target.value)}
             className="p-2 h-10 rounded w-full bg-bg-light-1 dark:bg-bg-dark-1"
           >
-            <option value="">Select proficiency level</option>
-            <option value="beginner">Beginner</option>
-            <option value="elementary">Elementary</option>
-            <option value="proficient">Proficient</option>
-            <option value="native">Native</option>
+            <option value={tp("proficiency.beginner")}>
+              {tp("proficiency.beginner")}
+            </option>
+            <option value={tp("proficiency.elementary")}>
+              {tp("proficiency.elementary")}
+            </option>
+            <option value={tp("proficiency.proficient")}>
+              {tp("proficiency.proficient")}
+            </option>
+            <option value={tp("proficiency.advanced")}>
+              {tp("proficiency.advanced")}
+            </option>
+            <option value={tp("proficiency.native")}>
+              {tp("proficiency.native")}
+            </option>
           </select>
           {errors.proficiency && (
             <p className="text-red-500 text-sm absolute -bottom-6">
@@ -120,12 +133,12 @@ const Language: React.FC<LangProps> = ({ ID = 0, TobeUpdated }) => {
             </p>
           )}
         </div>
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center w-64">
           <button
             type="submit"
-            className="bg-primary text-white rounded p-2 px-4"
+            className="bg-primary text-white rounded p-2 px-2"
           >
-            +
+            {TobeUpdated ? t("button.save") : t("button.add")}
           </button>
         </div>
         <div
