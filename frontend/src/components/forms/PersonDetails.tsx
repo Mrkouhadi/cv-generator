@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../state/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../state/store";
 import { addUser, updateUser } from "../../state/UserSlice";
 import { User } from "../../utils/types";
 import Toast from "../Taost";
@@ -12,8 +12,11 @@ interface PersonDetailsProps {
 const PersonDetails: React.FC<PersonDetailsProps> = ({ userTobeUpdated }) => {
   // the toast state
   const [toast, setToats] = useState({ message: "", type: "" });
-  // a dispatcher of redux-toolkit
+  // the dispatcher of redux-toolkit
   const dispatch: AppDispatch = useDispatch();
+  const status = useSelector((state: RootState) => state.user.status);
+  const error = useSelector((state: RootState) => state.user.error);
+
   // the user's data state
   const [imageSrc, setImageSrc] = useState<any>("");
   const [fullName, setFullName] = useState("");
@@ -70,7 +73,7 @@ const PersonDetails: React.FC<PersonDetailsProps> = ({ userTobeUpdated }) => {
         Name: fullName,
         Email: email,
         Photo: imageSrc,
-        Birthdate: new Date(birthdate),
+        Birthdate: new Date(birthdate), // Convert Date to string
         Telephone: telephone,
         Address: address,
         Nationality: nationality,
@@ -115,7 +118,7 @@ const PersonDetails: React.FC<PersonDetailsProps> = ({ userTobeUpdated }) => {
     if (userTobeUpdated) {
       setFullName(userTobeUpdated.Name);
       setEmail(userTobeUpdated.Email);
-      setImageSrc(userTobeUpdated.Photo);
+      // setImageSrc(userTobeUpdated.Photo);
       setTelephone(userTobeUpdated.Telephone);
       // Convert the birthdate to YYYY-MM-DD format
       const birthdateFormatted = new Date(userTobeUpdated.Birthdate)

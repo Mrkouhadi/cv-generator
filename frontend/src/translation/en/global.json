@@ -13,7 +13,22 @@
     "button": {
         "register": "Register",
         "add": "Add",
-        "update": "Update",
-        "delete": "Delete"
+        "edit": "Edit",
+        "delete": "Delete",
+        "add-new-profile": "Add New Profile",
+        "generate": "Genrate a CV",
+        "save": "Save",
+        "exportPDF": "Export to PDF",
+        "exportPNG": "Export to PNG"
+    },
+    "personalDetails": {
+        "name": "Name",
+        "email": "Email",
+        "telephone": "Telephone",
+        "address": "Address",
+        "birthdate": "Birth Date",
+        "personalSummary": "Personal Summary",
+        "nationality": "Nationality",
+        "jobTitle": "Job Title"
     }
 }

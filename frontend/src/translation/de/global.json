@@ -13,7 +13,23 @@
     "button": {
         "register": "Registrieren",
         "add": "Hinzufügen",
-        "update": "Aktualisieren",
-        "delete": "Löschen"
+        "edit": "Bearbeiten",
+        "delete": "Löschen",
+        "add-new-profile": "Neues Profil hinzufügen",
+        "generate": "Einen Lebenslauf erstellen",
+        "save": "Speichern",
+        "exportPDF":"Als PDF exportieren",
+        "exportPNG":"Als PNG exportieren"
+
+    },
+    "personalDetails": {
+        "name": "Name",
+        "email": "E-Mail",
+        "telephone": "Telefon",
+        "address": "Adresse",
+        "birthdate": "Geburtsdatum",
+        "personalSummary": "Persönliche Zusammenfassung",
+        "nationality": "Nationalität",
+        "jobTitle": "Berufsbezeichnung"
     }
 }

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { deleteExperience } from "../../state/ExperienceSlice";
 import { AppDispatch } from "../../state/store";
@@ -9,6 +10,9 @@ type ProspType = {
   experience: expType;
 };
 const ExperienceCard: React.FC<ProspType> = ({ experience }) => {
+  const [t, _] = useTranslation("global");
+  const [tp, __] = useTranslation("pages");
+
   const dispatch: AppDispatch = useDispatch();
   // Modal
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -18,22 +22,22 @@ const ExperienceCard: React.FC<ProspType> = ({ experience }) => {
     <div className="bg-bg-light-1 dark:bg-bg-dark-2 p-2 flex min-h-44 flex-col justify-between gap-2 shadow hover:shadow-lg">
       <div className="flex items-center justify-between">
         <p className="">
-          <span className="font-bold">Job Title: </span>
+          <span className="font-bold">{tp("experience.field")}: </span>
           {experience.Field}
         </p>
         <p className="text-start">
-          <span className="font-bold ">Field: </span>
-          {experience.Field}
+          <span className="font-bold ">{tp("experience.jobTitle")}: </span>
+          {experience.JobTitle}
         </p>
       </div>
 
       <p className="">
-        <span className="font-bold">Company: </span>
+        <span className="font-bold">{tp("experience.company")}: </span>
         {experience.Company}
       </p>
       <div className="flex items-center justify-between">
         <p className="">
-          <span className="font-bold">Started: </span>
+          <span className="font-bold">{tp("experience.started")}: </span>
           {
             typeof experience.StartDate === "string" // Check if Birthdate is a string
               ? (experience.StartDate as string).substring(0, 10) // Use substring method on strings
@@ -43,7 +47,7 @@ const ExperienceCard: React.FC<ProspType> = ({ experience }) => {
           }
         </p>
         <p className="">
-          <span className="font-bold">Ended: </span>
+          <span className="font-bold">{tp("experience.ended")}: </span>
           {
             typeof experience.EndDate === "string" // Check if Birthdate is a string
               ? (experience.EndDate as string).substring(0, 10) // Use substring method on strings
@@ -55,17 +59,16 @@ const ExperienceCard: React.FC<ProspType> = ({ experience }) => {
       </div>
       <div className="flex items-center justify-between">
         <p className="">
-          <span className="font-bold">Country: </span>
+          <span className="font-bold">{tp("experience.country")}: </span>
           {experience.Country}
         </p>
         <p className="">
-          <span className="font-bold">City: </span>
+          <span className="font-bold">{tp("experience.city")}: </span>
           {experience.City}
         </p>
       </div>
       <p className="">
-        <span className="font-bold">Description: </span>
-
+        <span className="font-bold">{tp("experience.description")}: </span>
         {experience.Description}
       </p>
 
@@ -74,13 +77,13 @@ const ExperienceCard: React.FC<ProspType> = ({ experience }) => {
           onClick={() => dispatch(deleteExperience(experience.ID!))}
           className="bg-red-500 text-white p-2 rounded"
         >
-          Delete
+          {t("button.delete")}
         </button>
         <button
           onClick={handleOpen}
           className="bg-green-600 text-white p-2 px-4 rounded"
         >
-          Edit
+          {t("button.edit")}
         </button>
       </div>
       <Modal show={showModal} onClose={handleClose}>

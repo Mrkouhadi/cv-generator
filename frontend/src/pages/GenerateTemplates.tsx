@@ -96,7 +96,6 @@ const GenerateTemplates: React.FC = () => {
             className="inline-block bg-red-500 h-52 w-44 mr-4 shadow"
           ></div>
         </section>
-
         {/* The generated template */}
         <div
           id="pdf"
@@ -118,7 +117,7 @@ const GenerateTemplates: React.FC = () => {
                   />
                 );
               default:
-                return <div className="">Please choose a template</div>;
+                return <div className="">""</div>;
             }
           })()}
         </div>
@@ -130,14 +129,14 @@ const GenerateTemplates: React.FC = () => {
           type="button"
           className="p-4 bg-primary text-white mt-4"
         >
-          EXPORT as PDF
+          {t("button.exportPDF")}
         </button>
         <button
           onClick={createPNG}
           type="button"
           className="p-4 bg-primary text-white mt-4"
         >
-          EXPORT as PNG
+          {t("button.exportPNG")}
         </button>
       </div>
     </div>

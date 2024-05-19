@@ -36,7 +36,6 @@ export const deleteUser = createAsyncThunk<number, {UserId: number, File: string
 // Define thunk for updating a user
 export const updateUser = createAsyncThunk<User, User>('users/update', async (userData:User) => {
     await UpdateUser(JSON.stringify(userData));
-    console.log("slice: ", userData)
     return userData;
   });
 
@@ -69,6 +68,9 @@ const userSlice = createSlice({
       })
       .addCase(deleteUser.fulfilled, (state, action) => {
         state.users = state.users.filter((user) => user.ID !== action.payload);
+      })
+      .addCase(updateUser.pending, (state) => {
+        console.log("updateUser.pending",state);
       })
       .addCase(updateUser.fulfilled, (state, action) => {
         const index = state.users.findIndex((user) => user.ID === action.payload.ID);

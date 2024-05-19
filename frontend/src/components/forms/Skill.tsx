@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { addSkill, updateSkill } from "../../state/SkillSlice";
 import { AppDispatch } from "../../state/store";
@@ -10,6 +11,9 @@ type SkillsProps = {
   TobeUpdated?: SkillType;
 };
 const Skill: React.FC<SkillsProps> = ({ ID = 0, TobeUpdated }) => {
+  const [t, _] = useTranslation("global");
+  const [tp, __] = useTranslation("pages");
+
   // the toast state
   const [toast, setToats] = useState({ message: "", type: "" });
   const dispatch: AppDispatch = useDispatch();
@@ -84,7 +88,7 @@ const Skill: React.FC<SkillsProps> = ({ ID = 0, TobeUpdated }) => {
     >
       <div className="flex items-center gap-2 w-full relative  py-2">
         <label className="" htmlFor="title">
-          Skill:
+          {tp("titles.skill")}:
         </label>
         <input
           type="text"
@@ -109,11 +113,18 @@ const Skill: React.FC<SkillsProps> = ({ ID = 0, TobeUpdated }) => {
           onChange={(e) => setProficiency(e.target.value)}
           className="p-2 h-10 rounded w-full bg-bg-light-1 dark:bg-bg-dark-1"
         >
-          <option value="">Select proficiency level</option>
-          <option value="beginner">Beginner</option>
-          <option value="elementary">Elementary</option>
-          <option value="proficient">Proficient</option>
-          <option value="advanced">Advanced</option>
+          <option value={tp("proficiency.beginner")}>
+            {tp("proficiency.beginner")}
+          </option>
+          <option value={tp("proficiency.elementary")}>
+            {tp("proficiency.elementary")}
+          </option>
+          <option value={tp("proficiency.proficient")}>
+            {tp("proficiency.proficient")}
+          </option>
+          <option value={tp("proficiency.advanced")}>
+            {tp("proficiency.advanced")}
+          </option>
         </select>
         {errors.proficiency && (
           <p className="text-red-500 text-sm absolute -bottom-6">
@@ -122,7 +133,7 @@ const Skill: React.FC<SkillsProps> = ({ ID = 0, TobeUpdated }) => {
         )}
       </div>
       <button type="submit" className="bg-primary text-white rounded p-2 px-4">
-        {TobeUpdated ? "Update" : "Add"}
+        {TobeUpdated ? t("button.save") : t("button.add")}
       </button>
       <div
         className={`${

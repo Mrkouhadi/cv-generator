@@ -6,7 +6,6 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center p-4 h-screen overflow-y-scroll">
-      <h1>{t("sidebar.dashboard")}</h1>
       <hr />
       <Users />
     </div>

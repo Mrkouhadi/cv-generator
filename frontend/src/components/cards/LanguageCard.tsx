@@ -1,8 +1,10 @@
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/solid";
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { deleteLanguage } from "../../state/LanguageSlice";
 import { AppDispatch } from "../../state/store";
+import { capitalize } from "../../utils/helpers";
 import { Language as lanType } from "../../utils/types";
 import Language from "../forms/Language";
 import Modal from "../Modal";
@@ -10,6 +12,7 @@ type ProspType = {
   language: lanType;
 };
 const LanguageCard: React.FC<ProspType> = ({ language }) => {
+  const [tp, _] = useTranslation("pages");
   const dispatch: AppDispatch = useDispatch();
   // Modal
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -19,7 +22,7 @@ const LanguageCard: React.FC<ProspType> = ({ language }) => {
   return (
     <div className="bg-bg-light-1 dark:bg-bg-dark-2 p-2 rounded flex items-center justify-between">
       <p className="">{language.Language}</p>
-      <p className="">{language.Proficiency}</p>
+      <p className=""> {language.Proficiency}</p>
       <div className="flex items-center gap-2">
         <button
           onClick={() => {
