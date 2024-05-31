@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { deleteLanguage } from "../../state/LanguageSlice";
 import { AppDispatch } from "../../state/store";
-import { capitalize } from "../../utils/helpers";
 import { Language as lanType } from "../../utils/types";
 import Language from "../forms/Language";
 import Modal from "../Modal";
