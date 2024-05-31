@@ -103,7 +103,7 @@ const UserPage: React.FC = () => {
         <img
           src={"http://localhost:34115/" + user?.Photo}
           alt={user?.Name}
-          className="h-[600px] w-[400px] rounded-full"
+          className="h-[550px] w-[400px] rounded-full border border-4 border-gray-200"
         />
         <div className="flex flex-col gap-4 text-xl tracking-wide">
           <p className="text-center font-extrabold text-5xl">

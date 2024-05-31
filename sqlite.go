@@ -217,7 +217,6 @@ func (app *App) UpdateUser(data string) error {
 		fmt.Println("Error unmarshalling JSON:", err)
 		return nil
 	}
-	fmt.Println(user)
 	// saving the new image file and getting back the path to store it in the database
 	d := time.Now()
 	dateString := d.Format("2006-01-02 15:04:05") // Format: YYYY-MM-DD
@@ -548,7 +547,6 @@ func (app *App) DeleteSkillByID(skillID int) error {
 	if err != nil {
 		return err
 	}
-	log.Printf("skill %d has been deleted", skillID)
 	return nil
 }
 func (app *App) DeleteLanguageByID(languageID int) error {

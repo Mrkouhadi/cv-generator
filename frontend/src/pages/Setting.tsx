@@ -1,4 +1,7 @@
+import { useTranslation } from "react-i18next";
+
 const Setting: React.FC = () => {
-  return <div className="min-h-screen p-4">setting</div>;
+  const [t, _] = useTranslation("global");
+  return <div className="min-h-screen p-4">{t("sidebar.setting")}</div>;
 };
 export default Setting;

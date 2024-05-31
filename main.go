@@ -10,6 +10,8 @@ import (
 	"github.com/wailsapp/wails/v2/pkg/options/mac"
 )
 
+const version string = "1.0.0"
+
 //go:embed all:frontend/dist
 var assets embed.FS
 var icon []byte
@@ -53,7 +55,7 @@ func main() {
 			WebviewIsTransparent: true,
 			WindowIsTranslucent:  true,
 			About: &mac.AboutInfo{
-				Title:   "CV Generator",
+				Title:   "CV Generator V" + version,
 				Message: "Copyright © 2024 Mr.Kouhadi",
 				Icon:    icon,
 			},
